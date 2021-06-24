@@ -31,7 +31,7 @@ export default {
     const data = this.mergeData('inputData');
     const slotsConfig = data['slots'] || {};
 
-    const getInputSlots = (slots) => {
+    const getSlots = (slots) => {
       return Object.keys(slots).map(slotName => {
         const f = slots[slotName];
         return f && f.call(this, h);
@@ -41,7 +41,7 @@ export default {
     return !this.readonly
       ? renderWidget
         ? renderWidget.call(this, h)
-        : h(ElInput, data, getInputSlots(slotsConfig))
+        : h(ElInput, data, getSlots(slotsConfig))
       : renderReadonly
         ? renderReadonly.call(this, h)
         : this._renderReadonly();

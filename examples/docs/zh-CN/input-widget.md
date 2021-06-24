@@ -557,7 +557,7 @@
           return h("input", {
             domProps: { value: vm.value },
             attrs: {
-              placeholder: "edit me",
+              placeholder: vm.placeholder,
             },
             style: {
               padding: "8px 5px",
