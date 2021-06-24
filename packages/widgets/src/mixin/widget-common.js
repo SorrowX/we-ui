@@ -6,16 +6,8 @@ import { isObject } from 'element-ui/src/utils/types';
 export default {
   data() {
     return {
-      modelValue: this.value,
-
       dataList: [] // radio checkbox select 控件使用的列表数据 [{ lable: '', value: '', disabled?: true}]
     };
-  },
-
-  watch: {
-    value(newValue) {
-      this.modelValue = newValue;
-    }
   },
 
   computed: {
@@ -125,22 +117,20 @@ export default {
 
     _renderReadonly() {
       const h = this.$createElement;
-      let value = this.value;
-      return renderReadonly(h, value);
+      return renderReadonly(h, this.value);
     },
 
     mergeData(dataKey, innerChange) {
       const vm = this;
-      let data = this[dataKey];
+      let data = this[dataKey] || {};
       const { type } = this;
 
       // v-model
       const model = {
         model: {
-          expression: 'modelValue',
-          value: this.modelValue,
+          expression: 'value',
+          value: this.value,
           callback: function($$v) {
-            vm.modelValue = $$v;
             vm.$emit('input', $$v);
           }
         }
