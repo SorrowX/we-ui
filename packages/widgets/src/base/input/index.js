@@ -13,6 +13,11 @@ export default {
   mixins: [ widgetProp, widgetApi, widgetCommon ],
 
   props: {
+    type: {
+      type: String,
+      default: 'input'
+    },
+
     value: [String, Number],
 
     inputData: {
@@ -22,11 +27,11 @@ export default {
   },
 
   render(h) {
-    const { renderReadonly } = this;
+    const { renderReadonly, renderWidget } = this;
     const data = this.mergeData('inputData');
     const slotsConfig = data['slots'] || {};
 
-    const getInputSlots = (slots = {}) => {
+    const getInputSlots = (slots) => {
       return Object.keys(slots).map(slotName => {
         const f = slots[slotName];
         return f && f.call(this, h);
@@ -34,7 +39,9 @@ export default {
     };
 
     return !this.readonly
-      ? h(ElInput, data, getInputSlots(slotsConfig))
+      ? renderWidget
+        ? renderWidget.call(this, h)
+        : h(ElInput, data, getInputSlots(slotsConfig))
       : renderReadonly
         ? renderReadonly.call(this, h)
         : this._renderReadonly();

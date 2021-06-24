@@ -301,6 +301,15 @@
               "title": "Drawer 抽屉"
             }
           ]
+        },
+        {
+          "groupName": "Externals",
+          "list": [
+            {
+              "path": "/input-widget",
+              "title": "InputWidget"
+            }
+          ]
         }
       ]
     }
@@ -605,6 +614,15 @@
             {
               "path": "/drawer",
               "title": "Drawer"
+            }
+          ]
+        },
+        {
+          "groupName": "Externals",
+          "list": [
+            {
+              "path": "/input-widget",
+              "title": "InputWidget"
             }
           ]
         }
@@ -913,6 +931,15 @@
               "title": "Drawer"
             }
           ]
+        },
+        {
+          "groupName": "Externals",
+          "list": [
+            {
+              "path": "/input-widget",
+              "title": "InputWidget"
+            }
+          ]
         }
       ]
     }
@@ -1217,6 +1244,15 @@
             {
               "path": "/drawer",
               "title": "Drawer"
+            }
+          ]
+        },
+        {
+          "groupName": "Externals",
+          "list": [
+            {
+              "path": "/input-widget",
+              "title": "InputWidget"
             }
           ]
         }

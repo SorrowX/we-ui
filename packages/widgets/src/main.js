@@ -1,5 +1,5 @@
-import { createStore, mapStates } from './store/help';
 import widgets from './widgets';
+import { createStore, mapStates } from './store/help';
 
 const Widgets = { };
 

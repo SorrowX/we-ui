@@ -2,7 +2,11 @@ import { ajaxOptions } from '../config';
 
 export default {
   props: {
-    type: String,
+    type: String, // 控件类型
+
+    value: null,
+
+    placeholder: String,
 
     readonly: {
       type: Boolean,
@@ -11,9 +15,7 @@ export default {
 
     renderReadonly: Function,
 
-    value: String, // 各个widget组件重写这个属性
-
-    placeholder: String,
+    renderWidget: Function,
 
     disabled: {
       type: Boolean,

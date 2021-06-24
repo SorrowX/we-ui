@@ -25,12 +25,11 @@ export default {
     },
 
     setValue(value) {
-      this.modelValue = value;
+      this.$emit('input', value);
     },
 
     getValue() {
-      return this.modelValue;
+      return this.value;
     }
-
   }
 };
