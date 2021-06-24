@@ -318,6 +318,7 @@
 | --------------- | ---------------------------------------------------------------------------------------- | -------- | ------ | ------------ |
 | type            | 控件类型                                                                                 | string   | —      | input-number |
 | value / v-model | 绑定值                                                                                   | number   | —      | 0            |
+| placeholder     | 输入框占位文本                                                                           | string   | —      | —            |
 | readonly        | 控件是否只读                                                                             | boolean  | —      | false        |
 | disabled        | 控件是否禁用(只有在非只读时可用)                                                         | boolean  | —      | false        |
 | renderReadonly  | 当控件只读时,自定义只读渲染函数,this 指向 input-number-widget 组件实例,含有一个 h 参数   | function | —      | —            |
