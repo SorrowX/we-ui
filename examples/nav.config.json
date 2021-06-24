@@ -308,6 +308,10 @@
             {
               "path": "/input-widget",
               "title": "InputWidget"
+            },
+            {
+              "path": "/input-number-widget",
+              "title": "InputNumberWidget"
             }
           ]
         }
@@ -623,6 +627,10 @@
             {
               "path": "/input-widget",
               "title": "InputWidget"
+            },
+            {
+              "path": "/input-number-widget",
+              "title": "InputNumberWidget"
             }
           ]
         }
@@ -938,6 +946,10 @@
             {
               "path": "/input-widget",
               "title": "InputWidget"
+            },
+            {
+              "path": "/input-number-widget",
+              "title": "InputNumberWidget"
             }
           ]
         }
@@ -1253,6 +1265,10 @@
             {
               "path": "/input-widget",
               "title": "InputWidget"
+            },
+            {
+              "path": "/input-number-widget",
+              "title": "InputNumberWidget"
             }
           ]
         }

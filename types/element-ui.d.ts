@@ -85,6 +85,7 @@ import { ElSkeletonItem } from './skeleton-item'
 import { ElCascaderPanel } from './cascader-panel'
 import { ElEmpty } from './empty'
 import { ElInputWidget } from './input-widget'
+import { ElInputNumberWidget } from './input-number-widget'
 
 export interface InstallationOptions {
   locale: any,
@@ -364,3 +365,6 @@ export class Empty extends ElEmpty {}
 
 /** InputWidget Component */
 export class InputWidget extends ElInputWidget {}
+
+/** InputNumberWidget Component */
+export class InputNumberWidget extends ElInputNumberWidget {}

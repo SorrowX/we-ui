@@ -86,6 +86,7 @@ import Skeleton from '../packages/skeleton/index.js';
 import SkeletonItem from '../packages/skeleton-item/index.js';
 import Empty from '../packages/empty/index.js';
 import InputWidget from '../packages/input-widget/index.js';
+import InputNumberWidget from '../packages/input-number-widget/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -171,6 +172,7 @@ const components = [
   SkeletonItem,
   Empty,
   InputWidget,
+  InputNumberWidget,
   CollapseTransition
 ];
 
@@ -296,5 +298,6 @@ export default {
   Skeleton,
   SkeletonItem,
   Empty,
-  InputWidget
+  InputWidget,
+  InputNumberWidget
 };
