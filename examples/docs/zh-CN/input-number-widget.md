@@ -284,7 +284,7 @@
   export default {
     data() {
       return {
-        num1: "我是自定义渲染控件",
+        num1: 0,
         renderWidget: function(h) {
           const vm = this;
           return h("input", {
