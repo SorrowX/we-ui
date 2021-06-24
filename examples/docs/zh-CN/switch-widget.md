@@ -131,6 +131,99 @@
 
 :::
 
+:::tip
+下面是新增 demo
+:::
+
+### 只读控件
+
+:::demo `readonly`属性可以开启该组件不渲染 switch 组件而是渲染文本，更加轻量级。使用`renderReadonly`属性可以自定义只读渲染函数.
+
+```html
+<el-switch-widget readonly v-model="bool1"> </el-switch-widget>
+<div style="margin: 20px 0;"></div>
+<el-switch-widget readonly v-model="bool2" :renderReadonly="renderReadonly">
+</el-switch-widget>
+
+<script>
+  export default {
+    data() {
+      return {
+        bool1: true,
+        bool2: false,
+        renderReadonly: function(h) {
+          return h(
+            "span",
+            {
+              style: { color: "#f60" },
+            },
+            this.value ? "开着呢" : "关着呢"
+          );
+        },
+      };
+    },
+  };
+</script>
+```
+
+:::
+
+### 自定义渲染控件
+
+:::demo 使用`renderWidget`属性可以自定义渲染控件.
+
+```html
+<div>
+  <el-switch-widget v-model="bool1" :renderWidget="renderWidget1">
+  </el-switch-widget>
+  <p>{{ bool1 }}</p>
+
+  <el-switch-widget v-model="bool2" :renderWidget="renderWidget2">
+  </el-switch-widget>
+  <p>{{ bool2 }}</p>
+</div>
+
+<script>
+  export default {
+    data() {
+      const getVnode = function(h, round = false) {
+        const vm = this;
+
+        const input = h("input", {
+          domProps: { checked: vm.value },
+          attrs: {
+            type: "checkbox",
+          },
+          on: {
+            change(evt) {
+              vm.$emit("input", evt.target.checked);
+            },
+          },
+        });
+
+        return h("label", { class: "switch-custom" }, [
+          input,
+          h("div", { class: ["slider-custom", round ? "round" : ""] }),
+        ]);
+      };
+
+      return {
+        bool1: true,
+        bool2: false,
+        renderWidget1: function(h) {
+          return getVnode.call(this, h);
+        },
+        renderWidget2: function(h) {
+          return getVnode.call(this, h, true);
+        },
+      };
+    },
+  };
+</script>
+```
+
+:::
+
 ### SwitchWidget Attributes
 
 | 参数            | 说明                                                                              | 类型                      | 可选值 | 默认值 |
