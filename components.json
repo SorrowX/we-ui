@@ -84,5 +84,6 @@
   "skeleton": "./packages/skeleton/index.js",
   "skeleton-item": "./packages/skeleton-item/index.js",
   "empty": "./packages/empty/index.js",
-  "input-widget": "./packages/input-widget/index.js"
+  "input-widget": "./packages/input-widget/index.js",
+  "input-number-widget": "./packages/input-number-widget/index.js"
 }

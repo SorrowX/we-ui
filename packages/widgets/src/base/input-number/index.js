@@ -13,7 +13,12 @@ export default {
   mixins: [ widgetProp, widgetApi, widgetCommon ],
 
   props: {
-    value: Number,
+    type: {
+      type: String,
+      default: 'input-number'
+    },
+
+    value: {},
 
     inputNumberData: {
       type: Object,
@@ -22,11 +27,13 @@ export default {
   },
 
   render(h) {
-    const { renderReadonly } = this;
+    const { renderReadonly, renderWidget } = this;
     const data = this.mergeData('inputNumberData');
 
     return !this.readonly
-      ? h(ElInputNumber, data)
+      ? renderWidget
+        ? renderWidget.call(this, h)
+        : h(ElInputNumber, data)
       : renderReadonly
         ? renderReadonly.call(this, h)
         : this._renderReadonly();
