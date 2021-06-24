@@ -312,6 +312,10 @@
             {
               "path": "/input-number-widget",
               "title": "InputNumberWidget"
+            },
+            {
+              "path": "/switch-widget",
+              "title": "SwitchWidget"
             }
           ]
         }
@@ -631,6 +635,10 @@
             {
               "path": "/input-number-widget",
               "title": "InputNumberWidget"
+            },
+            {
+              "path": "/switch-widget",
+              "title": "SwitchWidget"
             }
           ]
         }
@@ -950,6 +958,10 @@
             {
               "path": "/input-number-widget",
               "title": "InputNumberWidget"
+            },
+            {
+              "path": "/switch-widget",
+              "title": "SwitchWidget"
             }
           ]
         }
@@ -1269,6 +1281,10 @@
             {
               "path": "/input-number-widget",
               "title": "InputNumberWidget"
+            },
+            {
+              "path": "/switch-widget",
+              "title": "SwitchWidget"
             }
           ]
         }

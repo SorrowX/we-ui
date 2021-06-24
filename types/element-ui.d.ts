@@ -86,6 +86,7 @@ import { ElCascaderPanel } from './cascader-panel'
 import { ElEmpty } from './empty'
 import { ElInputWidget } from './input-widget'
 import { ElInputNumberWidget } from './input-number-widget'
+import { ElSwitchWidget } from './switch-widget'
 
 export interface InstallationOptions {
   locale: any,
@@ -368,3 +369,6 @@ export class InputWidget extends ElInputWidget {}
 
 /** InputNumberWidget Component */
 export class InputNumberWidget extends ElInputNumberWidget {}
+
+/** SwitchWidget Component */
+export class SwitchWidget extends ElSwitchWidget {}
