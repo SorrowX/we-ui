@@ -87,6 +87,9 @@ import { ElEmpty } from './empty'
 import { ElInputWidget } from './input-widget'
 import { ElInputNumberWidget } from './input-number-widget'
 import { ElSwitchWidget } from './switch-widget'
+import { ElTimePickerWidget } from './time-picker-widget'
+import { ElTimeSelectWidget } from './time-select-widget'
+import { ElDatePickerWidget } from './date-picker-widget'
 
 export interface InstallationOptions {
   locale: any,
@@ -372,3 +375,12 @@ export class InputNumberWidget extends ElInputNumberWidget {}
 
 /** SwitchWidget Component */
 export class SwitchWidget extends ElSwitchWidget {}
+
+/** TimePickerWidget Component */
+export class TimePickerWidget extends ElTimePickerWidget {}
+
+/** TimeSelectWidget Component */
+export class TimeSelectWidget extends ElTimeSelectWidget {}
+
+/** DatePickerWidget Component */
+export class DatePickerWidget extends ElDatePickerWidget {}

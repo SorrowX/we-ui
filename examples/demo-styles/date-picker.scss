@@ -1,10 +1,12 @@
-.demo-block.demo-date-picker .source > div {
+.demo-block.demo-date-picker .source > div,
+.demo-block.demo-date-picker-widget .source > div {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
 }
 
-.demo-date-picker .block {
+.demo-date-picker .block,
+.demo-date-picker-widget .block {
   padding: 30px 0;
   text-align: center;
   border-right: solid 1px #eff2f6;
@@ -14,7 +16,8 @@
   }
 }
 
-.demo-date-picker .container {
+.demo-date-picker .container,
+.demo-date-picker-widget .container {
   flex: 1;
   border-right: solid 1px #eff2f6;
   .block {
@@ -28,7 +31,8 @@
   }
 }
 
-.demo-date-picker .demonstration {
+.demo-date-picker .demonstration,
+.demo-date-picker-widget .demonstration {
   display: block;
   color: #8492a6;
   font-size: 14px;

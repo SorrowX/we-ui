@@ -88,6 +88,9 @@ import Empty from '../packages/empty/index.js';
 import InputWidget from '../packages/input-widget/index.js';
 import InputNumberWidget from '../packages/input-number-widget/index.js';
 import SwitchWidget from '../packages/switch-widget/index.js';
+import TimePickerWidget from '../packages/time-picker-widget/index.js';
+import TimeSelectWidget from '../packages/time-select-widget/index.js';
+import DatePickerWidget from '../packages/date-picker-widget/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -175,6 +178,9 @@ const components = [
   InputWidget,
   InputNumberWidget,
   SwitchWidget,
+  TimePickerWidget,
+  TimeSelectWidget,
+  DatePickerWidget,
   CollapseTransition
 ];
 
@@ -302,5 +308,8 @@ export default {
   Empty,
   InputWidget,
   InputNumberWidget,
-  SwitchWidget
+  SwitchWidget,
+  TimePickerWidget,
+  TimeSelectWidget,
+  DatePickerWidget
 };

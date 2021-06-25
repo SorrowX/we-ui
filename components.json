@@ -86,5 +86,8 @@
   "empty": "./packages/empty/index.js",
   "input-widget": "./packages/input-widget/index.js",
   "input-number-widget": "./packages/input-number-widget/index.js",
-  "switch-widget": "./packages/switch-widget/index.js"
+  "switch-widget": "./packages/switch-widget/index.js",
+  "time-picker-widget": "./packages/time-picker-widget/index.js",
+  "time-select-widget": "./packages/time-select-widget/index.js",
+  "date-picker-widget": "./packages/date-picker-widget/index.js"
 }

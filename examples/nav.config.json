@@ -316,6 +316,18 @@
             {
               "path": "/switch-widget",
               "title": "SwitchWidget"
+            },
+            {
+              "path": "/time-picker-widget",
+              "title": "TimePickerWidget"
+            },
+            {
+              "path": "/time-select-widget",
+              "title": "TimeSelectWidget"
+            },
+            {
+              "path": "/date-picker-widget",
+              "title": "DatePickerWidget"
             }
           ]
         }
@@ -639,6 +651,18 @@
             {
               "path": "/switch-widget",
               "title": "SwitchWidget"
+            },
+            {
+              "path": "/time-picker-widget",
+              "title": "TimePickerWidget"
+            },
+            {
+              "path": "/time-select-widget",
+              "title": "TimeSelectWidget"
+            },
+            {
+              "path": "/date-picker-widget",
+              "title": "DatePickerWidget"
             }
           ]
         }
@@ -962,6 +986,18 @@
             {
               "path": "/switch-widget",
               "title": "SwitchWidget"
+            },
+            {
+              "path": "/time-picker-widget",
+              "title": "TimePickerWidget"
+            },
+            {
+              "path": "/time-select-widget",
+              "title": "TimeSelectWidget"
+            },
+            {
+              "path": "/date-picker-widget",
+              "title": "DatePickerWidget"
             }
           ]
         }
@@ -1285,6 +1321,18 @@
             {
               "path": "/switch-widget",
               "title": "SwitchWidget"
+            },
+            {
+              "path": "/time-picker-widget",
+              "title": "TimePickerWidget"
+            },
+            {
+              "path": "/time-select-widget",
+              "title": "TimeSelectWidget"
+            },
+            {
+              "path": "/date-picker-widget",
+              "title": "DatePickerWidget"
             }
           ]
         }

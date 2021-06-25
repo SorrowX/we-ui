@@ -13,7 +13,12 @@ export default {
   mixins: [ widgetProp, widgetApi, widgetCommon ],
 
   props: {
-    value: String,
+    type: {
+      type: String,
+      default: 'time-select'
+    },
+
+    value: {},
 
     timeSelectData: {
       type: Object,
@@ -22,11 +27,13 @@ export default {
   },
 
   render(h) {
-    const { renderReadonly } = this;
+    const { renderReadonly, renderWidget } = this;
     const data = this.mergeData('timeSelectData');
 
     return !this.readonly
-      ? h(ElTimeSelect, data)
+      ? renderWidget
+        ? renderWidget.call(this, h)
+        : h(ElTimeSelect, data)
       : renderReadonly
         ? renderReadonly.call(this, h)
         : this._renderReadonly();

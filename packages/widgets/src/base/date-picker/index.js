@@ -13,7 +13,12 @@ export default {
   mixins: [ widgetProp, widgetApi, widgetCommon ],
 
   props: {
-    value: [String, Array, Date, Number, Object],
+    type: {
+      type: String,
+      default: 'date-picker'
+    },
+
+    value: {},
 
     datePickerData: {
       type: Object,
@@ -22,11 +27,21 @@ export default {
   },
 
   render(h) {
-    const { renderReadonly } = this;
+    const { renderReadonly, renderWidget } = this;
     const data = this.mergeData('datePickerData');
+    const slotsConfig = data['slots'] || {};
+
+    const getSlots = (slots) => {
+      return Object.keys(slots).map(slotName => {
+        const f = slots[slotName];
+        return f && f.call(this, h);
+      });
+    };
 
     return !this.readonly
-      ? h(ElDatePicker, data)
+      ? renderWidget
+        ? renderWidget.call(this, h)
+        : h(ElDatePicker, data, getSlots(slotsConfig))
       : renderReadonly
         ? renderReadonly.call(this, h)
         : this._renderReadonly();
