@@ -49,7 +49,7 @@ export default {
             ;[list, apiList].some(_ => {
               if (
                 Array.isArray(_) &&
-              _.every(item => isObject(item))
+                _.every(item => isObject(item))
               ) {
                 finalList = _;
                 return true;

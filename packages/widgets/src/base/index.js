@@ -8,6 +8,7 @@ import ElSwitchWidget from './switch';
 import ElTimeSelectWidget from './time-select';
 import ElTimePickerWidget from './time-picker';
 import ElDatePickerWidget from './date-picker';
+import ElUploadWidget from './upload';
 
 const components = [
   ElRadioWidget,
@@ -19,7 +20,8 @@ const components = [
   ElSwitchWidget,
   ElTimeSelectWidget,
   ElTimePickerWidget,
-  ElDatePickerWidget
+  ElDatePickerWidget,
+  ElUploadWidget
 ];
 
 export default components.reduce((pre, comp) => {
