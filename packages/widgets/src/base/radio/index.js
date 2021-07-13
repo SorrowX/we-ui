@@ -17,7 +17,7 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'radio' // radio/button
+      default: 'radio'
     },
 
     value: {},
@@ -30,6 +30,7 @@ export default {
 
   render(h) {
     const { renderReadonly, renderWidget } = this;
+
     let innerChange = ((value) => {
       const ajaxOptions = this.mergedAjaxOptions;
       const valuekey = ajaxOptions.props.value;

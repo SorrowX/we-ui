@@ -15,7 +15,12 @@ export default {
   mixins: [ widgetProp, widgetApi, widgetCommon ],
 
   props: {
-    value: [Array, String],
+    type: {
+      type: String,
+      default: 'checkbox'
+    },
+
+    value: {},
 
     checkboxData: {
       type: Object,
@@ -24,9 +29,10 @@ export default {
   },
 
   render(h) {
-    const { renderReadonly } = this;
+    const { renderReadonly, renderWidget } = this;
+
     let innerChange = ((value) => {
-      const { ajaxOptions } = this;
+      const ajaxOptions = this.mergedAjaxOptions;
       const valuekey = ajaxOptions.props.value;
       const rawData = this.rawDataList.filter(_ => value.includes(_[valuekey])) || null;
       this.emitEvent({ value, rawData, valuekey, widgetInstance: this });
@@ -36,18 +42,20 @@ export default {
     const hasBorder = (data.props || {}).border;
 
     return !this.readonly
-      ? h(
-        ElCheckboxGroup,
-        data,
-        this._l(this.dataList, item => {
-          return h(checkboxType === 'button' ? ElCheckboxButton : ElCheckbox, {
-            props: {
-              label: item.value,
-              disabled: item.disabled,
-              border: hasBorder
-            }
-          }, item.label);
-        }))
+      ? renderWidget
+        ? renderWidget.call(this, h)
+        : h(
+          ElCheckboxGroup,
+          data,
+          this._l(this.dataList, item => {
+            return h(checkboxType === 'button' ? ElCheckboxButton : ElCheckbox, {
+              props: {
+                label: item.value,
+                disabled: item.disabled,
+                border: hasBorder
+              }
+            }, item.label);
+          }))
       : renderReadonly
         ? renderReadonly.call(this, h)
         : this._renderReadonly();

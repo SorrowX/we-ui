@@ -332,6 +332,10 @@
             {
               "path": "/radio-widget",
               "title": "RadioWidget"
+            },
+            {
+              "path": "/checkbox-widget",
+              "title": "CheckboxWidget"
             }
           ]
         }
@@ -671,6 +675,10 @@
             {
               "path": "/radio-widget",
               "title": "RadioWidget"
+            },
+            {
+              "path": "/checkbox-widget",
+              "title": "CheckboxWidget"
             }
           ]
         }
@@ -1010,6 +1018,10 @@
             {
               "path": "/radio-widget",
               "title": "RadioWidget"
+            },
+            {
+              "path": "/checkbox-widget",
+              "title": "CheckboxWidget"
             }
           ]
         }
@@ -1349,6 +1361,10 @@
             {
               "path": "/radio-widget",
               "title": "RadioWidget"
+            },
+            {
+              "path": "/checkbox-widget",
+              "title": "CheckboxWidget"
             }
           ]
         }
