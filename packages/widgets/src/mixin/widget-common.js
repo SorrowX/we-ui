@@ -1,5 +1,6 @@
 import { merge, bindContext, renderReadonly } from '../utils';
 import ajax from '../utils/ajax';
+import { ajaxOptions as defaultAjaxOptions } from '../config';
 import { getValueByPath } from 'element-ui/src/utils/util';
 import { isObject } from 'element-ui/src/utils/types';
 
@@ -13,12 +14,15 @@ export default {
   computed: {
     rawDataList() {
       return this.ajaxOptions.localList || this.dataList;
+    },
+    mergedAjaxOptions() {
+      return merge({}, defaultAjaxOptions, this.ajaxOptions);
     }
   },
 
   methods: {
     getDataListFromApi(callback) {
-      const { ajaxOptions = ajaxOptions } = this;
+      const ajaxOptions = this.mergedAjaxOptions;
       const before = ajaxOptions.before;
       const success = ajaxOptions.success;
       const error = ajaxOptions.error;
@@ -74,7 +78,7 @@ export default {
     },
 
     getDataList(list) {
-      const { props } = this.ajaxOptions;
+      const { props } = this.mergedAjaxOptions;
       const selectType = ((this.selectData || {}).props || {}).type;
 
       const getList = (listData = []) => {
@@ -99,7 +103,7 @@ export default {
     },
 
     setDataList() {
-      const { ajaxOptions } = this;
+      const ajaxOptions = this.mergedAjaxOptions;
       const { localList = [] } = ajaxOptions;
       if (this.dataList.length) return;
       if (Array.isArray(localList) && localList.length > 0) {

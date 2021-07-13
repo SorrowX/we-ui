@@ -328,6 +328,10 @@
             {
               "path": "/date-picker-widget",
               "title": "DatePickerWidget"
+            },
+            {
+              "path": "/radio-widget",
+              "title": "RadioWidget"
             }
           ]
         }
@@ -663,6 +667,10 @@
             {
               "path": "/date-picker-widget",
               "title": "DatePickerWidget"
+            },
+            {
+              "path": "/radio-widget",
+              "title": "RadioWidget"
             }
           ]
         }
@@ -998,6 +1006,10 @@
             {
               "path": "/date-picker-widget",
               "title": "DatePickerWidget"
+            },
+            {
+              "path": "/radio-widget",
+              "title": "RadioWidget"
             }
           ]
         }
@@ -1333,6 +1345,10 @@
             {
               "path": "/date-picker-widget",
               "title": "DatePickerWidget"
+            },
+            {
+              "path": "/radio-widget",
+              "title": "RadioWidget"
             }
           ]
         }

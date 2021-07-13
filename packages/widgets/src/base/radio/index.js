@@ -15,7 +15,12 @@ export default {
   mixins: [ widgetProp, widgetApi, widgetCommon ],
 
   props: {
-    value: [Number, String, Boolean],
+    type: {
+      type: String,
+      default: 'radio' // radio/button
+    },
+
+    value: {},
 
     radioData: {
       type: Object,
@@ -24,9 +29,9 @@ export default {
   },
 
   render(h) {
-    const { renderReadonly } = this;
+    const { renderReadonly, renderWidget } = this;
     let innerChange = ((value) => {
-      const { ajaxOptions } = this;
+      const ajaxOptions = this.mergedAjaxOptions;
       const valuekey = ajaxOptions.props.value;
       const rawData = this.rawDataList.find(_ => _[valuekey] === value);
       this.emitEvent({ value, rawData, valuekey, widgetInstance: this });
@@ -36,18 +41,20 @@ export default {
     const hasBorder = (data.props || {}).border;
 
     return !this.readonly
-      ? h(
-        ElRadioGroup,
-        data,
-        this._l(this.dataList, item => {
-          return h(radioType === 'button' ? ElRadioButton : ElRadio, {
-            props: {
-              label: item.value,
-              disabled: item.disabled,
-              border: hasBorder
-            }
-          }, item.label);
-        }))
+      ? renderWidget
+        ? renderWidget.call(this, h)
+        : h(
+          ElRadioGroup,
+          data,
+          this._l(this.dataList, item => {
+            return h(radioType === 'button' ? ElRadioButton : ElRadio, {
+              props: {
+                label: item.value,
+                disabled: item.disabled,
+                border: hasBorder
+              }
+            }, item.label);
+          }))
       : renderReadonly
         ? renderReadonly.call(this, h)
         : this._renderReadonly();

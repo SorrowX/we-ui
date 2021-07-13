@@ -90,6 +90,7 @@ import { ElSwitchWidget } from './switch-widget'
 import { ElTimePickerWidget } from './time-picker-widget'
 import { ElTimeSelectWidget } from './time-select-widget'
 import { ElDatePickerWidget } from './date-picker-widget'
+import { ElRadioWidget } from './radio-widget'
 
 export interface InstallationOptions {
   locale: any,
@@ -384,3 +385,6 @@ export class TimeSelectWidget extends ElTimeSelectWidget {}
 
 /** DatePickerWidget Component */
 export class DatePickerWidget extends ElDatePickerWidget {}
+
+/** RadioWidget Component */
+export class RadioWidget extends ElRadioWidget {}

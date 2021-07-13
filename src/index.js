@@ -91,6 +91,7 @@ import SwitchWidget from '../packages/switch-widget/index.js';
 import TimePickerWidget from '../packages/time-picker-widget/index.js';
 import TimeSelectWidget from '../packages/time-select-widget/index.js';
 import DatePickerWidget from '../packages/date-picker-widget/index.js';
+import RadioWidget from '../packages/radio-widget/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -181,6 +182,7 @@ const components = [
   TimePickerWidget,
   TimeSelectWidget,
   DatePickerWidget,
+  RadioWidget,
   CollapseTransition
 ];
 
@@ -311,5 +313,6 @@ export default {
   SwitchWidget,
   TimePickerWidget,
   TimeSelectWidget,
-  DatePickerWidget
+  DatePickerWidget,
+  RadioWidget
 };
