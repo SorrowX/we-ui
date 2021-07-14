@@ -7,7 +7,7 @@ import { isObject } from 'element-ui/src/utils/types';
 export default {
   data() {
     return {
-      dataList: [] // radio checkbox select 控件使用的列表数据 [{ lable: '', value: '', disabled?: true}]
+      dataList: [] // radio checkbox select 控件使用的列表数据(转换后的数据) [{ lable: '', value: '', disabled?: true}]
     };
   },
 
@@ -93,7 +93,7 @@ export default {
 
       if (selectType === 'group') {
         list.forEach(_ => {
-          _.options = getList(_.options);
+          _.options = getList(_.options); // el-option-group
           return _;
         });
         return list;
@@ -102,13 +102,13 @@ export default {
       }
     },
 
-    setDataList() {
+    setDataList(askNetwork = true) {
       const ajaxOptions = this.mergedAjaxOptions;
       const { localList = [] } = ajaxOptions;
       if (this.dataList.length) return;
       if (Array.isArray(localList) && localList.length > 0) {
         this.dataList = this.getDataList(localList);
-      } else {
+      } else if (askNetwork) {
         this.getDataListFromApi((error, list) => {
           if (!error) {
             this.dataList = this.getDataList(list);

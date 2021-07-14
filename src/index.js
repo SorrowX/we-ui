@@ -93,6 +93,7 @@ import TimeSelectWidget from '../packages/time-select-widget/index.js';
 import DatePickerWidget from '../packages/date-picker-widget/index.js';
 import RadioWidget from '../packages/radio-widget/index.js';
 import CheckboxWidget from '../packages/checkbox-widget/index.js';
+import SelectWidget from '../packages/select-widget/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -185,6 +186,7 @@ const components = [
   DatePickerWidget,
   RadioWidget,
   CheckboxWidget,
+  SelectWidget,
   CollapseTransition
 ];
 
@@ -317,5 +319,6 @@ export default {
   TimeSelectWidget,
   DatePickerWidget,
   RadioWidget,
-  CheckboxWidget
+  CheckboxWidget,
+  SelectWidget
 };

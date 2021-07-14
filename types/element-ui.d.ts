@@ -92,6 +92,7 @@ import { ElTimeSelectWidget } from './time-select-widget'
 import { ElDatePickerWidget } from './date-picker-widget'
 import { ElRadioWidget } from './radio-widget'
 import { ElCheckboxWidget } from './checkbox-widget'
+import { ElSelectWidget } from './select-widget'
 
 export interface InstallationOptions {
   locale: any,
@@ -392,3 +393,6 @@ export class RadioWidget extends ElRadioWidget {}
 
 /** CheckboxWidget Component */
 export class CheckboxWidget extends ElCheckboxWidget {}
+
+/** SelectWidget Component */
+export class SelectWidget extends ElSelectWidget {}

@@ -16,7 +16,14 @@ export default {
   mixins: [ widgetProp, widgetApi, widgetCommon ],
 
   props: {
-    value: [String, Number, Boolean, Array],
+    type: {
+      type: String,
+      default: 'select'
+    },
+
+    value: {
+      required: true
+    },
 
     selectData: {
       type: Object,
@@ -25,11 +32,11 @@ export default {
   },
 
   render(h) {
-    const { renderReadonly } = this;
+    const { renderReadonly, renderWidget } = this;
 
     // 内部 change 事件
     let innerChange = ((value) => {
-      const { ajaxOptions } = this;
+      const ajaxOptions = this.mergedAjaxOptions;
       const valuekey = ajaxOptions.props.value;
       let rawData = Array.isArray(value)
         ? this.rawDataList.filter(_ => value.includes(_[valuekey]))
@@ -62,9 +69,12 @@ export default {
     let defaultSlot = (data.slots || {}).default;
     delete data.slots;
 
-    if ((data.props || {}).remoteMethod) {
-      data.props.remoteMethod = bindContext(data.props.remoteMethod, this);
-    }
+    // remoteMethod,filterMethod 绑定 this
+    ['remoteMethod', 'filterMethod'].forEach(method => {
+      if ((data.props || {})[method]) {
+        data['props'][method] = bindContext(data['props'][method], this);
+      }
+    });
 
     const createItem = (list) => {
       return this._l(list, item => {
@@ -93,7 +103,9 @@ export default {
     };
 
     return !this.readonly
-      ? h(ElSelect, data, createChild())
+      ? renderWidget
+        ? renderWidget.call(this, h)
+        : h(ElSelect, data, createChild())
       : renderReadonly
         ? renderReadonly.call(this, h)
         : this._renderReadonly();

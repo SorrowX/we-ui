@@ -336,6 +336,10 @@
             {
               "path": "/checkbox-widget",
               "title": "CheckboxWidget"
+            },
+            {
+              "path": "/select-widget",
+              "title": "SelectWidget"
             }
           ]
         }
@@ -679,6 +683,10 @@
             {
               "path": "/checkbox-widget",
               "title": "CheckboxWidget"
+            },
+            {
+              "path": "/select-widget",
+              "title": "SelectWidget"
             }
           ]
         }
@@ -1022,6 +1030,10 @@
             {
               "path": "/checkbox-widget",
               "title": "CheckboxWidget"
+            },
+            {
+              "path": "/select-widget",
+              "title": "SelectWidget"
             }
           ]
         }
@@ -1365,6 +1377,10 @@
             {
               "path": "/checkbox-widget",
               "title": "CheckboxWidget"
+            },
+            {
+              "path": "/select-widget",
+              "title": "SelectWidget"
             }
           ]
         }
