@@ -10,7 +10,9 @@ export const ajaxOptions = {
   props: {
     label: 'label',
     value: 'value',
-    disabled: 'disabled'
+    disabled: 'disabled',
+    children: 'children', // for el-cascader
+    leaf: 'leaf' // // for el-cascader
   },
   localList: [], // 本地列表数据代替接口请求
   ajaxResult: null,

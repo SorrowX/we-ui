@@ -806,15 +806,15 @@
 
 ### SelectWidget Attributes
 
-| 参数            | 说明                                                                               | 类型                       | 可选值 | 默认值 |
-| --------------- | ---------------------------------------------------------------------------------- | -------------------------- | ------ | ------ |
-| type            | 控件类型                                                                           | string                     | —      | select |
-| value / v-model | 绑定值                                                                             | string(只读时使用) / array | —      | —      |
-| readonly        | 控件是否只读                                                                       | boolean                    | —      | false  |
-| disabled        | 控件是否禁用(只有在非只读时可用)                                                   | boolean                    | —      | false  |
-| renderReadonly  | 当控件只读时,自定义只读渲染函数,this 指向 select-widget 组件实例,含有一个 h 参数   | function                   | —      | —      |
-| renderWidget    | 当控件非只读时,自定义控件渲染函数,this 指向 select-widget 组件实例,含有一个 h 参数 | function                   | —      | —      |
-| selectData      | radio 组件的所有 props 属性,attrs 属性,on 事件 详见下文                            | object                     | —      | {}     |
+| 参数            | 说明                                                                               | 类型                             | 可选值 | 默认值 |
+| --------------- | ---------------------------------------------------------------------------------- | -------------------------------- | ------ | ------ |
+| type            | 控件类型                                                                           | string                           | —      | select |
+| value / v-model | 绑定值                                                                             | boolean / string / number/ array | —      | —      |
+| readonly        | 控件是否只读                                                                       | boolean                          | —      | false  |
+| disabled        | 控件是否禁用(只有在非只读时可用)                                                   | boolean                          | —      | false  |
+| renderReadonly  | 当控件只读时,自定义只读渲染函数,this 指向 select-widget 组件实例,含有一个 h 参数   | function                         | —      | —      |
+| renderWidget    | 当控件非只读时,自定义控件渲染函数,this 指向 select-widget 组件实例,含有一个 h 参数 | function                         | —      | —      |
+| selectData      | radio 组件的所有 props 属性,attrs 属性,on 事件 详见下文                            | object                           | —      | {}     |
 
 ### selectData.props
 

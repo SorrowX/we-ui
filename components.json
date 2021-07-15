@@ -92,5 +92,6 @@
   "date-picker-widget": "./packages/date-picker-widget/index.js",
   "radio-widget": "./packages/radio-widget/index.js",
   "checkbox-widget": "./packages/checkbox-widget/index.js",
-  "select-widget": "./packages/select-widget/index.js"
+  "select-widget": "./packages/select-widget/index.js",
+  "cascader-widget": "./packages/cascader-widget/index.js"
 }

@@ -102,19 +102,26 @@ export default {
       }
     },
 
-    setDataList(askNetwork = true) {
+    setDataList(options = {}) {
+      const {
+        askNetwork = true,
+        callback = () => {},
+        convertData = this.getDataList
+      } = options;
       const ajaxOptions = this.mergedAjaxOptions;
       const { localList = [] } = ajaxOptions;
       if (this.dataList.length) return;
       if (Array.isArray(localList) && localList.length > 0) {
-        this.dataList = this.getDataList(localList);
+        this.dataList = convertData(localList);
+        callback && callback(null, this.dataList);
       } else if (askNetwork) {
         this.getDataListFromApi((error, list) => {
           if (!error) {
-            this.dataList = this.getDataList(list);
+            this.dataList = convertData(list);
           } else {
             this.dataList = [];
           }
+          callback && callback(error ? error : null, this.dataList);
         });
       }
     },
