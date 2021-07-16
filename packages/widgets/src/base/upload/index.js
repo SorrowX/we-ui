@@ -1,4 +1,5 @@
 import ElUpload from 'element-ui/packages/upload';
+import { isEqual } from 'element-ui/src/utils/util';
 import widgetProp from '../../mixin/widget-prop';
 import widgetApi from '../../mixin/widget-api';
 import widgetCommon from '../../mixin/widget-common';
@@ -38,18 +39,43 @@ export default {
       set(list) {
         this.$emit('input', list);
       }
+    },
+
+    hasScopedSlots() {
+      return Object.keys(this.$scopedSlots).length;
+    }
+  },
+
+  methods: {
+    _registerWatch() {
+      const uploadVm = this.$refs.core;
+      uploadVm.$watch('uploadFiles', {
+        handler: (list) => {
+          if (!isEqual(list, this.value)) {
+            this.fileList = list;
+          }
+        },
+        immediate: true
+      });
     }
   },
 
   render(h) {
-    const { renderReadonly, renderWidget, $slots = {} } = this;
+    const {
+      fileList,
+      renderReadonly,
+      renderWidget,
+      hasScopedSlots,
+      $slots = {},
+      uploadData = {}
+    } = this;
     const data = this.mergeData('uploadData');
 
     // handle fileList
     delete data.model;
-    data.props.fileList = this.fileList;
+    data.props.fileList = (uploadData.props || {}).fileList || fileList || [];
 
-    // handle props function
+    // handle props function bind this
     const { props } = data;
     Object.keys(props).forEach(key => {
       const f = props[key];
@@ -68,6 +94,11 @@ export default {
     };
     const userTemplateSlots = Object.keys($slots).map(slotName => $slots[slotName]);
 
+    // handle scopedSlots
+    if (hasScopedSlots) {
+      data.scopedSlots = this.$scopedSlots;
+    }
+
     // render
     return !this.readonly
       ? renderWidget
@@ -76,5 +107,9 @@ export default {
       : renderReadonly
         ? renderReadonly.call(this, h)
         : this._renderReadonly();
+  },
+
+  mounted() {
+    this._registerWatch();
   }
 };

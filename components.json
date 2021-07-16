@@ -93,5 +93,6 @@
   "radio-widget": "./packages/radio-widget/index.js",
   "checkbox-widget": "./packages/checkbox-widget/index.js",
   "select-widget": "./packages/select-widget/index.js",
-  "cascader-widget": "./packages/cascader-widget/index.js"
+  "cascader-widget": "./packages/cascader-widget/index.js",
+  "upload-widget": "./packages/upload-widget/index.js"
 }

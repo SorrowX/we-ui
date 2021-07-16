@@ -95,6 +95,7 @@ import RadioWidget from '../packages/radio-widget/index.js';
 import CheckboxWidget from '../packages/checkbox-widget/index.js';
 import SelectWidget from '../packages/select-widget/index.js';
 import CascaderWidget from '../packages/cascader-widget/index.js';
+import UploadWidget from '../packages/upload-widget/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -189,6 +190,7 @@ const components = [
   CheckboxWidget,
   SelectWidget,
   CascaderWidget,
+  UploadWidget,
   CollapseTransition
 ];
 
@@ -323,5 +325,6 @@ export default {
   RadioWidget,
   CheckboxWidget,
   SelectWidget,
-  CascaderWidget
+  CascaderWidget,
+  UploadWidget
 };

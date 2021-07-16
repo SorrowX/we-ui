@@ -94,6 +94,7 @@ import { ElRadioWidget } from './radio-widget'
 import { ElCheckboxWidget } from './checkbox-widget'
 import { ElSelectWidget } from './select-widget'
 import { ElCascaderWidget } from './cascader-widget'
+import { ElUploadWidget } from './upload-widget'
 
 export interface InstallationOptions {
   locale: any,
@@ -400,3 +401,6 @@ export class SelectWidget extends ElSelectWidget {}
 
 /** CascaderWidget Component */
 export class CascaderWidget extends ElCascaderWidget {}
+
+/** UploadWidget Component */
+export class UploadWidget extends ElUploadWidget {}
