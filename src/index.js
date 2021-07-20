@@ -98,6 +98,8 @@ import CascaderWidget from '../packages/cascader-widget/index.js';
 import UploadWidget from '../packages/upload-widget/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
+import ImageViewer from 'element-ui/packages/image/src/image-viewer';
+import widgets from 'element-ui/packages/widgets/index';
 
 const components = [
   Pagination,
@@ -191,7 +193,8 @@ const components = [
   SelectWidget,
   CascaderWidget,
   UploadWidget,
-  CollapseTransition
+  CollapseTransition,
+  ImageViewer
 ];
 
 const install = function(Vue, opts = {}) {
@@ -217,6 +220,7 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$prompt = MessageBox.prompt;
   Vue.prototype.$notify = Notification;
   Vue.prototype.$message = Message;
+  Vue.prototype.$widgets = widgets;
 
 };
 
@@ -232,6 +236,7 @@ export default {
   install,
   CollapseTransition,
   Loading,
+  ImageViewer,
   Pagination,
   Dialog,
   Autocomplete,
