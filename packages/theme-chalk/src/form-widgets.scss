@@ -15,19 +15,6 @@ $--border-color: #DCDFE6;
     margin-top: 22px;
     display: flex;
     justify-content: center;
-
-    @include m(justify-center) {
-      justify-content: center;
-    }
-    @include m(justify-end) {
-      justify-content: flex-end;
-    }
-    @include m(justify-space-between) {
-      justify-content: space-between;
-    }
-    @include m(justify-space-around) {
-      justify-content: space-around;
-    }
   }
 
   @include e(row-wrap) {
