@@ -12,7 +12,7 @@ export const ajaxOptions = {
     value: 'value',
     disabled: 'disabled',
     children: 'children', // for el-cascader
-    leaf: 'leaf' // // for el-cascader
+    leaf: 'leaf' // for el-cascader
   },
   localList: [], // 本地列表数据代替接口请求
   ajaxResult: null,
@@ -20,11 +20,21 @@ export const ajaxOptions = {
 };
 
 export const widgetBaseProps = {
+  type: 'type', // require
+  label: 'label', // require
+  prop: 'prop', // require
   span: 'span',
-  label: 'label',
   value: 'value',
-  type: 'type',
-  prop: 'prop'
+  required: 'required',
+  disabled: 'disabled',
+  placeholder: 'placeholder',
+  readonly: 'readonly',
+  rules: 'rules',
+  ajaxOptions: 'ajaxOptions',
+  renderWidget: 'renderWidget',
+  renderReadonly: 'renderReadonly',
+  formItemData: 'formItemData'
+  // type + 'Data': { props: {}, on: {} }
 };
 
 export const CHANGE_EVENT_NAME = 'el.widget.change';

@@ -1,0 +1,132 @@
+@import "mixins/mixins";
+@import "common/var";
+
+$--border-color: #DCDFE6;
+
+@include b(form-widgets) {
+
+  @include e(grid) {
+    min-width: 400px;
+    border-top: 1px solid $--border-color;
+    border-left: 1px solid $--border-color;
+  }
+
+  @include e(actions) {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+
+    @include m(justify-center) {
+      justify-content: center;
+    }
+    @include m(justify-end) {
+      justify-content: flex-end;
+    }
+    @include m(justify-space-between) {
+      justify-content: space-between;
+    }
+    @include m(justify-space-around) {
+      justify-content: space-around;
+    }
+  }
+
+  @include e(row-wrap) {
+    flex-wrap: wrap;
+    border-bottom: 1px solid $--border-color;
+    border-right: 1px solid $--border-color;
+
+    & > .el-col {
+      border-right: 1px solid $--border-color;
+
+      &.is-not-fully-covered {
+        border-right: 1px solid $--border-color !important;
+      }
+
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+
+  @include e(form-item-wrap) {
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+
+    & .el-form-item {
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 0;
+
+      & .el-form-item__label {
+        flex: none;
+        line-height: 44px;
+        border-right: 1px solid $--border-color;
+        padding: 0 14px;
+        color: #333;
+      }
+
+      &.is-required { /* 处理 required 情况 */
+        .el-form-item__label {
+          padding: 0 14px 0 3px;
+        }
+      }
+
+      & .el-form-item__content {
+        flex: 1;
+        margin-left: 0 !important; /* 重置 form/form-item组件计算好的margin-left值 */
+        padding: 2px 4px;
+
+        & .el-input__count { /* 多行文本框字符显示样式调整 */
+          line-height: 15px !important;
+        }
+      }
+    }
+
+    /* medium size */
+    & .el-form-item.el-form-item--medium {
+      & .el-form-item__label {
+        line-height: 40px;
+      }
+    }
+
+    /* small size */
+    & .el-form-item.el-form-item--small {
+      & .el-form-item__label {
+        line-height: 37px;
+        font-size: 13px;
+      }
+    }
+
+    /* mini size */
+    & .el-form-item.el-form-item--mini {
+      & .el-form-item__label {
+        line-height: 33px;
+        font-size: 12px;
+      }
+    }
+    
+    & .el-form-item__error {
+      position: relative !important;
+      top: 0;
+      z-index: 1;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    @include e(row-wrap) {
+      & > .el-col {
+        border-right: 0;
+  
+        &.is-not-fully-covered {
+          border-right: 0 !important;
+        }
+  
+        &:last-child {
+          border-right: 0;
+        }
+      }
+    }
+  }
+}

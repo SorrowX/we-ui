@@ -1,12 +1,12 @@
 import Store from './index';
 
-export function createStore(formWidget, initialState = {}) {
-  if (!formWidget) {
-    throw new Error('FormWidget vm is required.');
+export function createStore(componentInstance, initialState = {}) {
+  if (!componentInstance) {
+    throw new Error('componentInstance is required.');
   }
 
   const store = new Store();
-  store.formWidget = formWidget;
+  store.componentInstance = componentInstance;
 
   Object.keys(initialState).forEach(key => {
     store.states[key] = initialState[key];

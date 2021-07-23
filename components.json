@@ -94,5 +94,6 @@
   "checkbox-widget": "./packages/checkbox-widget/index.js",
   "select-widget": "./packages/select-widget/index.js",
   "cascader-widget": "./packages/cascader-widget/index.js",
-  "upload-widget": "./packages/upload-widget/index.js"
+  "upload-widget": "./packages/upload-widget/index.js",
+  "form-widgets": "./packages/form-widgets/index.js"
 }

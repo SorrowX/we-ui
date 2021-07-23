@@ -6,20 +6,7 @@ export const camelize = (str = '') => {
   return str.replace(camelizeRE, (_, c) => c ? c.toUpperCase() : '');
 };
 
-export const getPropByType = type => {
-  let prop = '';
-  switch (type) {
-    case 'text':
-      prop = 'input';
-      break;
-    case 'textarea':
-      prop = 'input';
-      break;
-    default:
-      prop = type;
-  }
-  return `${camelize(prop)}Data`;
-};
+export const getPropByType = type => `${camelize(type)}Data`;
 
 export const getComponentbyType = type => {
   return widgets[type]

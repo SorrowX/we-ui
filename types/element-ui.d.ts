@@ -95,6 +95,7 @@ import { ElCheckboxWidget } from './checkbox-widget'
 import { ElSelectWidget } from './select-widget'
 import { ElCascaderWidget } from './cascader-widget'
 import { ElUploadWidget } from './upload-widget'
+import { ElFormWidgets } from './form-widgets'
 
 export interface InstallationOptions {
   locale: any,
@@ -404,3 +405,6 @@ export class CascaderWidget extends ElCascaderWidget {}
 
 /** UploadWidget Component */
 export class UploadWidget extends ElUploadWidget {}
+
+/** FormWidgets Component */
+export class FormWidgets extends ElFormWidgets {}

@@ -96,6 +96,7 @@ import CheckboxWidget from '../packages/checkbox-widget/index.js';
 import SelectWidget from '../packages/select-widget/index.js';
 import CascaderWidget from '../packages/cascader-widget/index.js';
 import UploadWidget from '../packages/upload-widget/index.js';
+import FormWidgets from '../packages/form-widgets/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 import ImageViewer from 'element-ui/packages/image/src/image-viewer';
@@ -193,6 +194,7 @@ const components = [
   SelectWidget,
   CascaderWidget,
   UploadWidget,
+  FormWidgets,
   CollapseTransition,
   ImageViewer
 ];
@@ -331,5 +333,6 @@ export default {
   CheckboxWidget,
   SelectWidget,
   CascaderWidget,
-  UploadWidget
+  UploadWidget,
+  FormWidgets
 };

@@ -46,6 +46,15 @@ export default {
     }
   },
 
+  watch: {
+    value(fileList) {
+      this.emitEvent({
+        value: fileList,
+        widgetInstance: this
+      });
+    }
+  },
+
   methods: {
     _registerWatch() {
       const uploadVm = this.$refs.core;
@@ -97,6 +106,14 @@ export default {
     // handle scopedSlots
     if (hasScopedSlots) {
       data.scopedSlots = this.$scopedSlots;
+    } else {
+      const { scopedSlots = {} } = data;
+      Object.keys(scopedSlots).forEach(key => {
+        const f = scopedSlots[key];
+        if (typeof f === 'function') {
+          scopedSlots[key] = bindContext(f, this);
+        }
+      });
     }
 
     // render

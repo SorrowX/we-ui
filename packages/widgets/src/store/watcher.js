@@ -1,7 +1,6 @@
 import Vue from 'vue';
-import { generateId } from 'element-ui/src/utils/util';
 import { isObject } from 'element-ui/src/utils/types';
-import { ajaxOptions } from '../config';
+import { ajaxOptions, widgetBaseProps } from '../config';
 import {
   getPropByType,
   getComponentbyType,
@@ -26,41 +25,51 @@ export default Vue.extend({
 
   methods: {
     createWidget(widget) {
-      const props = this.formWidget.props;
-      const spanKey = props['span'] || 'span';
-      const labelKey = props['label'] || 'label';
-      const valueKey = props['value'] || 'value';
-      const typeKey = props['type'] || 'type';
-      const propKey = props['prop'] || 'prop';
+      const props = merge({}, widgetBaseProps, this.componentInstance.props);
+
+      const typeKey = props['type'];
+      const labelKey = props['label'];
+      const propKey = props['prop'];
+      const spanKey = props['span'];
+      const valueKey = props['value'];
+      const requiredKey = props['required'];
+      const disabledKey = props['disabled'];
+      const placeholderKey = props['placeholder'];
+      const readonlyKey = props['readonly'];
+      const rulesKey = props['rules'];
+      const ajaxOptionsKey = props['ajaxOptions'];
+      const renderWidgetKey = props['renderWidget'];
+      const renderReadonlyKey = props['renderReadonly'];
+      const formItemDataKey = props['formItemData'];
 
       const config = {
-        // 布局相关属性
-        span: widget[spanKey] * 1,
-        label: widget[labelKey],
-        size: this.formWidget.size,
+        // 控件布局相关属性
+        span: widget[spanKey] || 24,
+        label: widget[labelKey] || '',
 
         // 控件相关属性
         type: widget[typeKey],
-        prop: widget[propKey] || 'prop' + generateId(),
+        prop: widget[propKey],
         value: widget[valueKey],
-        required: widget['required'],
-        disabled: Boolean(widget['disabled']),
-        placeholder: widget['placeholder'],
-        readonly: widget['readonly'],
-        rules: getRules(widget['rules'], widget['required'], `${widget[labelKey]}必须填写!`),
+        required: widget[requiredKey],
+        disabled: Boolean(widget[disabledKey]),
+        placeholder: widget[placeholderKey],
+        readonly: widget[readonlyKey],
+        rules: getRules(widget[rulesKey], widget[requiredKey], `${widget[labelKey]}必须填写!`),
 
         // 网络请求相关属性
-        ajaxOptions: merge(ajaxOptions, widget['ajaxOptions'] || {}),
+        ajaxOptions: merge({}, ajaxOptions, widget[ajaxOptionsKey] || {}),
 
         // 组件相关属性
         [getPropByType(widget[typeKey])]: widget[getPropByType(widget[typeKey])] || {},
+        widgetComponent: getComponentbyType(widget[typeKey]), // 对应组件控件
         widgetVm: null, // 控件组件实例
-        widgetComponent: getComponentbyType(widget[typeKey]),
         formItemVm: null, // FormItem组件实例
+        formItemData: widget[formItemDataKey], // form-item 组件 { props, scopedSlots, on }
 
         // render 相关函数
-        renderWidget: widget['renderWidget'],
-        renderReadonly: widget['renderReadonly']
+        renderWidget: widget[renderWidgetKey],
+        renderReadonly: widget[renderReadonlyKey]
       };
 
       if (widget['columnData'] && isObject(widget['columnData'])) {
@@ -73,8 +82,7 @@ export default Vue.extend({
     },
 
     createWidgets(data) {
-      data = data.filter(_ => !_.hidden);
-      return data.map(_ => this.createWidget(_));
+      return data.filter(_ => !_.hidden).map(_ => this.createWidget(_));
     },
 
     createWidgetGroup(widgets) {
