@@ -7,14 +7,25 @@ import Widgets from 'element-ui/packages/widgets';
 import * as config from 'element-ui/packages/widgets/src/config';
 import * as utils from 'element-ui/packages/widgets/src/utils';
 import { isVNode } from 'element-ui/src/utils/vdom';
+import { isObject } from 'element-ui/src/utils/types';
 
 const { store } = Widgets;
-const { createStore, mapStates } = store;
+
+const {
+  createStore,
+  mapStates
+} = store;
+
 const {
   widgetBaseProps,
   CHANGE_EVENT_NAME
 } = config;
-const { getPropByType, merge, deepCopy } = utils;
+
+const {
+  getPropByType,
+  deepCopy,
+  merge
+} = utils;
 
 const DEFAULT_LABELWIDTH = '125px';
 
@@ -86,11 +97,11 @@ export default {
     },
     cancelText: {
       type: String,
-      default: '取消'
+      default: 'cancel'
     },
     submitText: {
       type: String,
-      default: '提交'
+      default: 'submit'
     },
     customClass: {
       type: String
@@ -110,25 +121,16 @@ export default {
   },
 
   methods: {
-    _setLabelBackgroundColor(backgroundColor) {
-      this.$nextTick(() => {
-        const { layout } = this;
-        if (layout === 'grid') {
-          const parent = this.formInstance.$el;
-          const labels = parent.querySelectorAll('label[class*="el-form-item__label"]');
-          labels.forEach(dom => {
-            dom.style.background = backgroundColor || this.labelBackgroundColor;
-          });
-        }
-      });
-    },
-
     getValue() {
       return this.model;
     },
 
     setValue(value) {
       const { model, $set } = this;
+      if (!isObject(value)) {
+        console.error('[Element Error][FormWidgets] value type need object.');
+        return;
+      }
       Object.keys(value).forEach(key => {
         $set(model, key, value[key]);
       });
@@ -157,6 +159,27 @@ export default {
 
     resetFields() {
       return this.formInstance.resetFields();
+    },
+
+    validateField(props, cb) {
+      this.formInstance.validateField(props, cb);
+    },
+
+    clearValidate(props = []) {
+      this.formInstance.clearValidate(props);
+    },
+
+    _setLabelBackgroundColor(backgroundColor) {
+      this.$nextTick(() => {
+        const { layout } = this;
+        if (layout === 'grid') {
+          const parent = this.formInstance.$el;
+          const labels = parent.querySelectorAll('label[class*="el-form-item__label"]');
+          labels.forEach(dom => {
+            dom.style.background = backgroundColor || this.labelBackgroundColor;
+          });
+        }
+      });
     },
 
     _getElFormData(width) {
@@ -437,8 +460,15 @@ export default {
       renderGridForm,
       renderTypicalForm,
       renderActionBtnForGridForm,
-      showActionButtons
+      showActionButtons,
+      data
     } = this;
+
+    if (!data.length) {
+      process.env.NODE_ENV !== 'production' &&
+        console.warn('[Element Warn][FormWidgets] prop data length is 0.');
+      return;
+    }
 
     const gridFormVNode = [
       renderGridForm(h),

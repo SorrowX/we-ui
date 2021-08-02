@@ -16,6 +16,8 @@
   :rules="rules"
   layout="classic"
   :show-action-buttons="true"
+  cancelText="取消"
+  submitText="提交"
   @on-submit="handleSubmit"
   @on-cancel="handleCancel"
   @change="handleChange"
@@ -179,6 +181,8 @@
   :rules="rules"
   layout="grid"
   :show-action-buttons="true"
+  cancelText="取消"
+  submitText="提交"
   @on-submit="handleSubmit"
   @on-cancel="handleCancel"
   @change="handleChange"
@@ -537,6 +541,8 @@
       :size="size"
       :show-action-buttons="true"
       :rules="rules"
+      cancelText="取消"
+      submitText="提交"
       @on-submit="handleSubmit"
       @on-cancel="handleCancel"
       @change="handleChange"
@@ -579,7 +585,7 @@ export default {
           }
         ],
         size: "medium",
-        labelBackgroundColor: "#F0F1F9",
+        labelBackgroundColor: "#fff",
         layout: 'grid',
         model: {
           text: '',
@@ -596,7 +602,8 @@ export default {
           number: 0,
           switch: false,
           thumb: [],
-          file: []
+          file: [],
+          long: ''
         },
         data: [
           {
@@ -984,6 +991,18 @@ export default {
               }
             }
           },
+          {
+            type: 'input',
+            span: 24,
+            placeholder: '',
+            prop: 'long',
+            label: '我是一个很长的label,虽然与众不同,但是我可以单独设置lable的宽度',
+            formItemData: {
+              props: {
+                labelWidth: 'auto'
+              }
+            }
+          },
         ],
         rules: {
           text: [
@@ -1110,17 +1129,17 @@ export default {
 | size  | 用于控制该表单内组件的尺寸 | string | medium / small / mini | — |
 | disabled | 是否禁用该表单内的所有组件。若设置为 true，则表单内组件上的 disabled 属性不再生效 | boolean | — | false |
 | data | 控件的配置项 | array | — | [] |
-| layout | 布局方式(grid|classic) | string | — | grid |
+| layout | 布局方式(grid/classic) | string | — | grid |
 | props | 和data的成员配置一致，用于转换data成员的key | object | — | 具体参考下面文档 |
 | labelBackgroundColor | 设置label的背景色 | string | — | #fdfdfd |
 | showLabelTitle | 鼠标移入label时是否展示原生title | boolean | — | false |
 | showActionButtons | 是否展示操作按钮组 | boolean | — | false |
-| cancelText | 取消按钮文本 | string | — | 取消 |
-| cancelText | 提交按钮文本 | string | — | 提交 |
+| cancelText | 取消按钮文本 | string | — | cancel |
+| submitText | 提交按钮文本 | string | — | submit |
 | customClass | 按钮组的自定义样式 | string | — | — |
 | readonly | 表单是否只读 | boolean | — | false |
 
-### data 成员配置项(props属性可以转换下面的key)
+### data 成员配置项
 #### props属性可以转换下面的key
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
@@ -1146,6 +1165,8 @@ export default {
 |---------- |-------------- | --------------
 | validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise | Function(callback: Function(boolean, object))
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
+| validateField | 对部分表单字段进行校验的方法 | Function(props: array \| string, callback: Function(errorMessage: string))
+| clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果 | Function(props: array \| string)
 | getValue | 获取到model的值 | —
 | setValue | 更新model的值 | model
 
@@ -1153,5 +1174,5 @@ export default {
 | 事件名称 | 说明    | 回调参数  |
 |--------- |-------- |---------- |
 | change | 任一控件触发change | { prop: '控件绑定的prop', value: '控件当前的值', model: '整个表单的值(深拷贝出来的副本)', formInstance:'表单实例', formItemInstance: '表单域实例', widgetInstance: '控件实例' }, rawData?: '接口的原始数据(当前被选中的)', valuekey?: '用于转换接口中的key值' |
-| on-sumit | 点击触发按钮的回调 |  |
+| on-sumit | 点击提交按钮的回调 |  |
 | on-cancel | 点击取消按钮的回调 |  |

@@ -68,6 +68,7 @@
       :show-action-buttons="true"
       :readonly="readonly"
       :rules="rules"
+      layout="grid"
       @on-submit="handleSubmit"
       @on-cancel="handleCancel"
       @change="handleChange"
