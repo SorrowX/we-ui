@@ -352,6 +352,10 @@
             {
               "path": "/form-widgets",
               "title": "FormWidgets"
+            },
+            {
+              "path": "/table-widgets",
+              "title": "TableWidgets"
             }
           ]
         }
@@ -711,6 +715,10 @@
             {
               "path": "/form-widgets",
               "title": "FormWidgets"
+            },
+            {
+              "path": "/table-widgets",
+              "title": "TableWidgets"
             }
           ]
         }
@@ -1070,6 +1078,10 @@
             {
               "path": "/form-widgets",
               "title": "FormWidgets"
+            },
+            {
+              "path": "/table-widgets",
+              "title": "TableWidgets"
             }
           ]
         }
@@ -1429,6 +1441,10 @@
             {
               "path": "/form-widgets",
               "title": "FormWidgets"
+            },
+            {
+              "path": "/table-widgets",
+              "title": "TableWidgets"
             }
           ]
         }

@@ -1,0 +1,25 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(table-widgets) {
+
+  @include e(form-item) {
+    margin-bottom: 0 !important;
+    & .el-form-item__error {
+      position: relative !important;
+      z-index: 1;
+    }
+  }
+
+  @include e(pagination-wrap) {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    & .el-pagination {
+      padding: 0;
+      .el-pagination__sizes {
+        margin: 0 -5px 0 0;
+      }
+    }
+  }
+}

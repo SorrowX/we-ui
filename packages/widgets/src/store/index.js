@@ -6,7 +6,6 @@ Watcher.prototype.mutations = {
     states.widgets = widgets;
     states.widgetsGroup = this.createWidgetGroup(widgets);
     states.form = this.createForm(widgets);
-    // console.log('group: ', states.widgetsGroup);
   },
 
   setTableColumns(states, data) {

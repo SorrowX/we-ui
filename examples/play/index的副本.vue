@@ -1,15 +1,71 @@
 <template>
-  <div>
+  <div style="margin: 20px;">
     <div>
+      <el-row>
+        <el-col :span="6">
+          <el-switch
+            style="margin: 0 0 20px 10px;"
+            v-model="readonly"
+            active-text="只读"
+            inactive-text="编辑"
+            @change="handleChange"
+          >
+          </el-switch>
+        </el-col>
+        <el-col :span="6">
+          <el-switch
+            style="margin: 0 0 20px 10px;"
+            v-model="setMaxHeight"
+            active-text="流体高度"
+            inactive-text="自适应"
+            @change="handleChangeHeight"
+          >
+          </el-switch>
+        </el-col>
+        <el-col :span="6">
+          <el-switch
+            style="margin: 0 0 20px 10px;"
+            v-model="border"
+            active-text="带边框"
+            inactive-text="不带边框"
+            @change="(bool) => { border = bool }"
+          >
+          </el-switch>
+        </el-col>
+        <el-col :span="6">
+          <el-switch
+            style="margin: 0 0 20px 10px;"
+            v-model="fixed"
+            active-text="固定"
+            inactive-text="不固定"
+            @change="handleChangeFixed"
+          >
+          </el-switch>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12" :offset="6">
+          <el-form>
+            <el-form-item label="大小设置">
+              <el-radio v-model="size" label="large">large</el-radio>
+              <el-radio v-model="size" label="medium">medium</el-radio>
+              <el-radio v-model="size" label="small">small</el-radio>
+              <el-radio v-model="size" label="mini">mini</el-radio>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+
       <el-table-widgets
-        border
         rowKey="id"
-        ref="comp"
-        size="medium"
-        mode="pagination"
         :data="tableData"
         :columns="columns"
-        @change="handleChange"
+        :border="border"
+        ref="comp"
+        style="width: 100%"
+        @sort-change="sortChange"
+        :size="size"
+        mode="pagination"
       >
       </el-table-widgets>
 
@@ -22,7 +78,7 @@
           <el-button size="small" @click="msg = ''">清空日志</el-button>
         </el-col>
 
-        <el-col style="max-height: 300px; overflow: auto;">
+        <el-col>
           <pre>{{ msg }}</pre>
         </el-col>
       </el-row>
@@ -31,6 +87,7 @@
 </template>
 
 <script>
+  import Vue from 'vue';
   let id = 0;
   const geUniqueId = () => {
     return ++id;
@@ -55,14 +112,14 @@
           {
             name: '徐志伟',
             sex: '1',
-            hobby: '喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉',
+            hobby: '喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步',
             fruit: ['2'],
             age: 29,
-            education: '1',
+            education: '',
             marry: true,
             address: ['江苏', '南京'],
             date: '2021-06-08',
-            dateTime: '2021-08-05 00:00:00',
+            dateTime: '',
             id: geUniqueId()
           },
           {
@@ -75,7 +132,7 @@
             marry: false,
             address: ['上海', '普陀'],
             date: '2021-06-08',
-            dateTime: '2021-08-05 00:00:00',
+            dateTime: '',
             id: geUniqueId()
           },
           {
@@ -88,7 +145,7 @@
             marry: false,
             address: ['浙江', '杭州'],
             date: '2021-06-08',
-            dateTime: '2021-08-05 00:00:00',
+            dateTime: '',
             id: geUniqueId()
           },
           {
@@ -101,21 +158,21 @@
             marry: false,
             address: ['上海', '徐汇'],
             date: '2021-06-08',
-            dateTime: '2021-08-05 00:00:00',
+            dateTime: '',
             id: geUniqueId()
           },
 
           {
             name: '徐志伟1',
             sex: '1',
-            hobby: '喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉',
+            hobby: '喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步',
             fruit: ['2'],
             age: 29,
-            education: '1',
+            education: '',
             marry: true,
             address: ['江苏', '南京'],
             date: '2021-06-08',
-            dateTime: '2021-08-05 00:00:00',
+            dateTime: '',
             id: geUniqueId()
           },
           {
@@ -156,7 +213,61 @@
             date: '2021-06-08',
             dateTime: '',
             id: geUniqueId()
-          }
+          },
+
+          {
+            name: '徐志伟2',
+            sex: '1',
+            hobby: '喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步喜欢睡觉,跑步',
+            fruit: ['2'],
+            age: 29,
+            education: '',
+            marry: true,
+            address: ['江苏', '南京'],
+            date: '2021-06-08',
+            dateTime: '',
+            id: geUniqueId()
+          },
+          {
+            name: '徐志康2',
+            sex: '1',
+            hobby: '喜欢的事可多呢',
+            fruit: ['1'],
+            age: 28,
+            education: '3',
+            marry: false,
+            address: ['上海', '普陀'],
+            date: '2021-06-08',
+            dateTime: '',
+            id: geUniqueId()
+          },
+          // {
+          //   name: '王琦2',
+          //   sex: '2',
+          //   hobby: '喜欢玩3A大作',
+          //   fruit: ['3'],
+          //   age: 29,
+          //   education: '2',
+          //   marry: false,
+          //   address: ['浙江', '杭州'],
+          //   date: '2021-06-08',
+          //   dateTime: '',
+          //   id: geUniqueId()
+          // },
+          // {
+          //   name: '李谢平2',
+          //   sex: '2',
+          //   hobby: '喜欢跑马拉松',
+          //   fruit: ['1'],
+          //   age: 28,
+          //   education: '1',
+          //   marry: false,
+          //   address: ['上海', '徐汇'],
+          //   date: '2021-06-08',
+          //   dateTime: '',
+          //   id: geUniqueId()
+          // }
+
         ],
   
         columns: [
@@ -165,7 +276,7 @@
               props: {
                 width: 165,
                 label: '操作',
-                fixed: 'left'
+                fixed: false
               },
               scopedSlots: {
                 default: function(scope) {
@@ -179,6 +290,7 @@
                       },
                       on: {
                         click: function() {
+                          console.log(scope);
                           const value = _this.tableData[scope.$index];
                           _this.msg = JSON.stringify(value, null, 2);
                         }
@@ -236,28 +348,7 @@
               props: {
                 type: 'index',
                 width: '50',
-                label: '#',
-                fixed: 'left'
-              },
-              scopedSlots: {
-                header: function(scope) {
-                  const h = this.$createElement;
-                  return h('div', {
-                    style: {
-                      display: 'flex',
-                      'justify-content': 'center'
-                    }
-                  }, '序号')
-                },
-                default: function(scope) {
-                  const h = this.$createElement;
-                  return h('div', {
-                    style: {
-                      display: 'flex',
-                      'justify-content': 'center'
-                    }
-                  }, scope.$index + 1)
-                }
+                label: '#'
               }
             }
           },
@@ -330,38 +421,36 @@
             cascaderData: {
               props: {
                 props: { checkStrictly: false },
+                options: [
+                  {
+                    value: '上海',
+                    label: '上海',
+                    children: [
+                      { value: '普陀', label: '普陀' },
+                      { value: '黄埔', label: '黄埔' },
+                      { value: '徐汇', label: '徐汇' }
+                    ]
+                  },
+                  {
+                    value: '江苏',
+                    label: '江苏',
+                    children: [
+                      { value: '南京', label: '南京' },
+                      { value: '苏州', label: '苏州' },
+                      { value: '无锡', label: '无锡' }
+                    ]
+                  },
+                  {
+                    value: '浙江',
+                    label: '浙江',
+                    children: [
+                      { value: '杭州', label: '杭州' },
+                      { value: '宁波', label: '宁波' },
+                      { value: '嘉兴', label: '嘉兴' }
+                    ]
+                  }
+                ]
               }
-            },
-            ajaxOptions: {
-              localList: [
-                {
-                  value: '上海',
-                  label: '上海',
-                  children: [
-                    { value: '普陀', label: '普陀' },
-                    { value: '黄埔', label: '黄埔' },
-                    { value: '徐汇', label: '徐汇' }
-                  ]
-                },
-                {
-                  value: '江苏',
-                  label: '江苏',
-                  children: [
-                    { value: '南京', label: '南京' },
-                    { value: '苏州', label: '苏州' },
-                    { value: '无锡', label: '无锡' }
-                  ]
-                },
-                {
-                  value: '浙江',
-                  label: '浙江',
-                  children: [
-                    { value: '杭州', label: '杭州' },
-                    { value: '宁波', label: '宁波' },
-                    { value: '嘉兴', label: '嘉兴' }
-                  ]
-                }
-              ]
             }
           },
 
@@ -534,6 +623,9 @@
       };
     },
     methods: {
+      sortChange() {
+        console.log(99)
+      },
       addRow() {
         this.tableData.push({
           name: '',
@@ -554,8 +646,11 @@
       },
 
       validate() {
+        // this.$refs.comp.validate().catch((...args) => {
+        //   console.log(args);
+        // });
         this.$refs.comp.validate((valid, invalidFields) => {
-          console.log(valid, invalidFields)
+          console.log('使用者: ', valid, invalidFields)
         })
       },
 
@@ -563,13 +658,35 @@
         this.$refs.comp.resetFields();
       },
 
-      handleChange(...args) {
-        console.log(args)
+      handleChange(val) {
+        this.columns = this.columns.map((_) => {
+          _.readonly = val;
+          return _;
+        });
+      },
+
+      handleChangeHeight(bool) {
+        this.maxHeight = bool ? '350px' : '';
+      },
+
+      handleChangeFixed(bool) {
+        this.columns[0]['columnData']['props']['fixed'] = bool;
       }
+  
+    },
+    mounted() {
+      window.xxx = this.$refs.comp;
+      window.vue = Vue;
+      window.ddd = this;
     }
   };
 </script>
 
 <style>
-
+  .tip {
+    font-size: 14px;
+    color: #5e6d82;
+    line-height: 1.5em;
+    margin: 30px 0;
+  }
 </style>
