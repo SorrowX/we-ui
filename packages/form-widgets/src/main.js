@@ -109,6 +109,9 @@ export default {
     readonly: {
       type: Boolean,
       default: false
+    },
+    customRender: {
+      type: Function
     }
   },
 
@@ -437,7 +440,7 @@ export default {
       const arg0 = args[0];
       const widgetInstance = arg0['widgetInstance'];
       const prop = widgetInstance.$attrs.prop;
-      arg0['formInstance'] = this;
+      arg0['formInstance'] = this.formInstance;
       arg0['formItemInstance'] = this.$refs['form-item-' + prop];
       arg0['prop'] = prop;
       arg0['model'] = deepCopy(this.model);
@@ -456,13 +459,18 @@ export default {
 
   render(h) {
     const {
+      data,
       layout,
       renderGridForm,
       renderTypicalForm,
       renderActionBtnForGridForm,
       showActionButtons,
-      data
+      customRender
     } = this;
+
+    if (customRender) {
+      return customRender.call(this, h);
+    }
 
     if (!data.length) {
       process.env.NODE_ENV !== 'production' &&
