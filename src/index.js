@@ -98,6 +98,7 @@ import CascaderWidget from '../packages/cascader-widget/index.js';
 import UploadWidget from '../packages/upload-widget/index.js';
 import FormWidgets from '../packages/form-widgets/index.js';
 import TableWidgets from '../packages/table-widgets/index.js';
+import ScrollbarV2 from '../packages/scrollbar-v2/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 import ImageViewer from 'element-ui/packages/image/src/image-viewer';
@@ -197,6 +198,7 @@ const components = [
   UploadWidget,
   FormWidgets,
   TableWidgets,
+  ScrollbarV2,
   CollapseTransition,
   ImageViewer
 ];
@@ -337,5 +339,6 @@ export default {
   CascaderWidget,
   UploadWidget,
   FormWidgets,
-  TableWidgets
+  TableWidgets,
+  ScrollbarV2
 };

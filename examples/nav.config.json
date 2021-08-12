@@ -356,6 +356,10 @@
             {
               "path": "/table-widgets",
               "title": "TableWidgets"
+            },
+            {
+              "path": "/scrollbar-v2",
+              "title": "ScrollbarV2"
             }
           ]
         }
@@ -719,6 +723,10 @@
             {
               "path": "/table-widgets",
               "title": "TableWidgets"
+            },
+            {
+              "path": "/scrollbar-v2",
+              "title": "ScrollbarV2"
             }
           ]
         }
@@ -1082,6 +1090,10 @@
             {
               "path": "/table-widgets",
               "title": "TableWidgets"
+            },
+            {
+              "path": "/scrollbar-v2",
+              "title": "ScrollbarV2"
             }
           ]
         }
@@ -1445,6 +1457,10 @@
             {
               "path": "/table-widgets",
               "title": "TableWidgets"
+            },
+            {
+              "path": "/scrollbar-v2",
+              "title": "ScrollbarV2"
             }
           ]
         }

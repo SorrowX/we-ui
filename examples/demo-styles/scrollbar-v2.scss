@@ -1,0 +1,33 @@
+.el-scrollbar-v2__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  margin: 10px;
+  text-align: center;
+  border-radius: 4px;
+  background: #ecf5ff;
+  color: #409eff;
+}
+
+.el-scrollbar-v2__flex-content {
+  display: flex;
+
+  .item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 4px;
+    background: #fef0f0;
+    color: #f56c6c;
+  }
+}
+
+.el-slider {
+  margin-top: 20px;
+}

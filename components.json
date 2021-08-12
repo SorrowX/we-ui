@@ -96,5 +96,6 @@
   "cascader-widget": "./packages/cascader-widget/index.js",
   "upload-widget": "./packages/upload-widget/index.js",
   "form-widgets": "./packages/form-widgets/index.js",
-  "table-widgets": "./packages/table-widgets/index.js"
+  "table-widgets": "./packages/table-widgets/index.js",
+  "scrollbar-v2": "./packages/scrollbar-v2/index.js"
 }

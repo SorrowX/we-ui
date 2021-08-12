@@ -97,6 +97,7 @@ import { ElCascaderWidget } from './cascader-widget'
 import { ElUploadWidget } from './upload-widget'
 import { ElFormWidgets } from './form-widgets'
 import { ElTableWidgets } from './table-widgets'
+import { ElScrollbarV2 } from './scrollbar-v2'
 
 export interface InstallationOptions {
   locale: any,
@@ -412,3 +413,6 @@ export class FormWidgets extends ElFormWidgets {}
 
 /** TableWidgets Component */
 export class TableWidgets extends ElTableWidgets {}
+
+/** ScrollbarV2 Component */
+export class ScrollbarV2 extends ElScrollbarV2 {}

@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import { isString, isObject } from 'element-ui/src/utils/types';
+import { warn } from './error';
+
+export const SCOPE = 'Util';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -238,4 +241,20 @@ export function objToArray(obj) {
     return obj;
   }
   return isEmpty(obj) ? [] : [obj];
+}
+
+export function isNumber(value) {
+  return typeof value === 'number';
+}
+
+export function addUnit(value) {
+  if (isString(value)) {
+    return value;
+  } else if (isNumber(value)) {
+    return value + 'px';
+  }
+  if (process.env.NODE_ENV === 'development') {
+    warn(SCOPE, 'binding value must be a string or number');
+  }
+  return '';
 }
