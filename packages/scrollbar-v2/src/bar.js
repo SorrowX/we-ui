@@ -10,7 +10,8 @@ export default {
     vertical: Boolean,
     size: String,
     move: Number,
-    always: Boolean
+    always: Boolean,
+    ratio: Number
   },
 
   data() {
@@ -32,19 +33,34 @@ export default {
       return renderThumbStyle({
         size, move, bar
       });
+    },
+
+    offsetRatio() {
+      // offsetRatioX = original width of thumb / current width of thumb / ratioX
+      // offsetRatioY = original height of thumb / current height of thumb / ratioY
+      // instance height = wrap height - GAP
+
+      const { bar, $refs, scrollbar, ratio } = this;
+      const instance = $refs.instance;
+      const thumb = $refs.thumb;
+      const wrap = scrollbar.$refs.wrap;
+
+      const originalThumbSize = instance[bar.offset] / wrap[bar.scrollSize] * instance[bar.offset];
+      const currentThumbSize = thumb[bar.offset];
+      return originalThumbSize / currentThumbSize / ratio;
     }
   },
 
   methods: {
     clickTrackHandler(e) {
-      const { bar, $refs, scrollbar } = this;
+      const { bar, $refs, scrollbar, offsetRatio } = this;
       const wrap = scrollbar.$refs.wrap;
       const thumb = $refs.thumb;
       const instance = $refs.instance;
 
       const offset = Math.abs(e[bar.client] - instance.getBoundingClientRect()[bar.direction]);
       const thumbHalf = thumb[bar.offset] / 2;
-      const thumbPositionPercentage = (offset - thumbHalf) / instance[bar.offset];
+      const thumbPositionPercentage = (offset - thumbHalf) * offsetRatio / instance[bar.offset];
 
       wrap[bar.scroll] = thumbPositionPercentage * wrap[bar.scrollSize];
     },
@@ -72,7 +88,7 @@ export default {
     },
 
     mouseMoveDocumentHandler(e) {
-      const { bar, barStore, $refs, scrollbar } = this;
+      const { bar, barStore, $refs, scrollbar, offsetRatio } = this;
       const wrap = scrollbar.$refs.wrap;
       const thumb = $refs.thumb;
       const instance = $refs.instance;
@@ -84,7 +100,7 @@ export default {
 
       const offset = (instance.getBoundingClientRect()[bar.direction] - e[bar.client]) * -1;
       const thumbClickPosition = thumb[bar.offset] - prevPage;
-      const thumbPositionPercentage = (offset - thumbClickPosition) / instance[bar.offset];
+      const thumbPositionPercentage = (offset - thumbClickPosition) * offsetRatio / instance[bar.offset];
       wrap[bar.scroll] = thumbPositionPercentage * wrap[bar.scrollSize];
     },
 

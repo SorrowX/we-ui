@@ -1,8 +1,12 @@
 <template>
   <div class="play">
-    <el-scrollbar-v2 height="100px">
+    <el-scrollbar-v2 height="200px">
       <p v-for="item in 10" class="item">{{ item }}</p>
     </el-scrollbar-v2>
+
+    <!-- <el-scrollbar-v2 height="400px">
+      <p class="el-scrollbar-v2__item" v-for="item in 20">{{ item }}</p>
+    </el-scrollbar-v2> -->
   </div>
 </template>
 

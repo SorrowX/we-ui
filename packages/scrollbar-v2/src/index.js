@@ -1,3 +1,6 @@
+// reference https://github.com/element-plus/element-plus/tree/dev/packages/scrollbar
+// reference https://github.com/element-plus/element-plus/pull/2916
+
 import { isString } from 'element-ui/src/utils/types';
 import { toObject, addUnit, isNumber } from 'element-ui/src/utils/util';
 import { warn } from 'element-ui/src/utils/error';
@@ -5,6 +8,7 @@ import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/re
 import Bar from './bar';
 
 const SCOPE = 'ElScrollbarV2';
+const GAP = 4; // top 2 + bottom 2 of bar instance
 
 export default {
   name: 'ElScrollbarV2',
@@ -49,7 +53,7 @@ export default {
       type: Boolean,
       default: false
     },
-    minThumbSize: {
+    minSize: {
       type: Number,
       default: 20
     }
@@ -66,7 +70,9 @@ export default {
       sizeWidth: '0',
       sizeHeight: '0',
       moveX: 0,
-      moveY: 0
+      moveY: 0,
+      ratioX: 1,
+      ratioY: 1
     };
   },
 
@@ -89,25 +95,38 @@ export default {
   methods: {
     update() {
       const wrap = this.$refs.wrap;
+      const { minSize } = this;
       if (!wrap) return;
 
-      const heightPercentage = (wrap.clientHeight * 100) / wrap.scrollHeight;
-      const widthPercentage = (wrap.clientWidth * 100) / wrap.scrollWidth;
+      const offsetHeight = wrap.offsetHeight - GAP;
+      const offsetWidth = wrap.offsetWidth - GAP;
 
-      this.sizeHeight = heightPercentage < 100 ? heightPercentage + '%' : '';
-      this.sizeWidth = widthPercentage < 100 ? widthPercentage + '%' : '';
+      const originalHeight = offsetHeight / wrap.scrollHeight * offsetHeight;
+      const originalWidth = offsetWidth / wrap.scrollWidth * offsetWidth;
+
+      const height = Math.max(originalHeight, minSize);
+      const width = Math.max(originalWidth, minSize);
+
+      this.ratioY = (originalHeight / (offsetHeight - originalHeight)) / (height / (offsetHeight - height));
+      this.ratioX = (originalWidth / (offsetWidth - originalWidth)) / (width / (offsetWidth - width));
+
+      this.sizeHeight = height + GAP < offsetHeight ? height + 'px' : '';
+      this.sizeWidth = width + GAP < offsetWidth ? width + 'px' : '';
     },
 
     handleScroll() {
       const wrap = this.$refs.wrap;
       if (!wrap) return;
 
-      this.moveY = (wrap.scrollTop * 100) / wrap.clientHeight;
-      this.moveX = (wrap.scrollLeft * 100) / wrap.clientWidth;
+      const offsetHeight = wrap.offsetHeight - GAP;
+      const offsetWidth = wrap.offsetWidth - GAP;
+
+      this.moveY = (wrap.scrollTop * 100) / offsetHeight * this.ratioY;
+      this.moveX = (wrap.scrollLeft * 100) / offsetWidth * this.ratioX;
 
       this.$emit('scroll', {
-        scrollLeft: this.moveX,
-        scrollTop: this.moveY
+        scrollLeft: wrap.scrollLeft,
+        scrollTop: wrap.scrollTop
       });
     },
 
@@ -197,7 +216,7 @@ export default {
   },
 
   render(h) {
-    const { native, sizeHeight, sizeWidth, moveX, moveY, always } = this;
+    const { native, sizeHeight, sizeWidth, moveX, moveY, ratioX, ratioY, always } = this;
 
     const wrapVNode = this.renderWrap(h);
 
@@ -208,7 +227,8 @@ export default {
           props: {
             always,
             size: sizeWidth,
-            move: moveX
+            move: moveX,
+            ratio: ratioX
           },
           ref: 'horizontalBar'
         }),
@@ -217,7 +237,8 @@ export default {
             always,
             vertical: true,
             size: sizeHeight,
-            move: moveY
+            move: moveY,
+            ratio: ratioY
           },
           ref: 'verticalBar'
         })

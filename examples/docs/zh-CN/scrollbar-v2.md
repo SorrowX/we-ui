@@ -108,6 +108,21 @@
 
 :::
 
+### 最小滚动条
+
+:::demo 当内容过多时, 通过使用 `minSize`可以设置滚动条的最小值,默认值是20.
+
+```html
+
+<template>
+  <el-scrollbar-v2 ref="scrollbar" height="400px" :min-size="25" always>
+    <p class="el-scrollbar-v2__item" v-for="item in 10000">{{ item }}</p>
+  </el-scrollbar-v2>
+</template>
+```
+
+:::
+
 ### ScrollbarV2 Attributes
 
 | 参数          | 说明            | 类型            | 可选值                 | 默认值   |
@@ -122,6 +137,7 @@
 | noresize  | 不响应容器尺寸变化，如果容器尺寸不会发生变化，最好设置它可以优化性能    | boolean  |    —  |  false |
 | tag  | 视图的元素标签    | string  |    —  |  div |
 | always  | 滚动条总是显示    | boolean  |    —  |  false |
+| min-size  | 滚动条的最小值    | number  |    —  |  20 |
 
 ### ScrollbarV2 Events
 
