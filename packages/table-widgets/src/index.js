@@ -117,6 +117,34 @@ export default {
       });
     },
 
+    disable(arr) {
+      this._setWidgetItemPropValue(arr, 'disabled', true);
+    },
+
+    enable(arr) {
+      this._setWidgetItemPropValue(arr, 'disabled', false);
+    },
+
+    _setWidgetItemPropValue(arr, itemKey, value) { // arr: [[0, ['prop1']], [1, ['prop1', 'prop2']]]
+      if (Array.isArray(arr) && arr.length) {
+        arr.forEach(arg => {
+          const [rowIndex, props] = arg;
+          props.forEach(prop => {
+            const key = `row-${rowIndex}-${prop}`;
+            if (this.widgetItemsProps[key]) {
+              this.widgetItemsProps[key][itemKey] = value;
+            }
+          });
+        });
+      } else {
+        Object.keys(this.$refs).forEach(key => {
+          if (this.widgetItemsProps[key]) {
+            this.widgetItemsProps[key][itemKey] = value;
+          }
+        });
+      }
+    },
+
     _validateForPaginationMode(callback) {
       this.validateAll((valid, invalidFields) => {
         if (!valid) {

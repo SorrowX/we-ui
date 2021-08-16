@@ -160,6 +160,245 @@
 ```
 :::
 
+### 列禁用
+
+可以快速禁用某一列控件,使之禁用。
+
+:::demo 在`columns`成员对象中使用`disabled`即可禁用某一列。使用`size`属性可以控制控件的大小。
+```html
+  <template>
+    <el-table-widgets
+      border
+      size="medium"
+      :data="tableData"
+      :columns="columns"
+    >
+    </el-table-widgets>
+  </template>
+
+  <script>
+  export default {
+    data() {
+      return {
+        readonly: false,
+        tableData: [
+          {
+            name: '徐志伟',
+            education: '',
+          },
+          {
+            name: '徐志康',
+            education: '3',
+          },
+          {
+            name: '王琦',
+            education: '2',
+          }
+        ],
+  
+        columns: [
+          {
+            type: 'input',
+            label: '姓名',
+            prop: 'name',
+            placeholder: '请输入姓名',
+            readonly: false,
+            disabled: true,
+          },
+
+          {
+            type: 'select',
+            label: '学历',
+            prop: 'education',
+            readonly: false,
+            disabled: true,
+            ajaxOptions: {
+              localList: [
+                {
+                  value: '1',
+                  label: '本科'
+                },
+                {
+                  value: '2',
+                  label: '大专'
+                },
+                {
+                  value: '3',
+                  label: '职高'
+                }
+              ]
+            }
+          },
+        ]
+      };
+    }
+  };
+  </script>
+```
+:::
+
+### 手动禁用
+
+:::demo 调用组件的`enable`和`disable`组件即可开启和禁用控件。这2个方法如果不传参数，默认全部启用或者全部禁用。也接受一个数组参数`[[0, ['prop1']], [1, ['prop1', 'prop2']]]`,数组成员也是数组,第一个成员表示第几行从`0`开始，第二个参数是控件的prop，表示禁用或者启用控件。
+```html
+  <template>
+    <div>
+      <el-row>
+        <el-col :span="8">
+          <el-button size="small" @click="handleClick1">全部禁用</el-button>
+          <el-button size="small" @click="handleClick2">局部禁用</el-button>
+          <el-button size="small" @click="handleClick3">全部启用</el-button>
+        </el-col>
+        <el-col :span="8"></el-col>
+        <el-col :span="8"></el-col>
+      </el-row>
+
+      <el-table-widgets
+        ref="table"
+        :data="tableData"
+        :columns="columns"
+      >
+      </el-table-widgets>
+    </div>
+  </template>
+
+  <script>
+    export default {
+    data() {
+      return {
+        readonly: false,
+        tableData: [
+          {
+            name: '徐志伟',
+            education: '',
+            address: ['江苏', '南京'],
+          },
+          {
+            name: '徐志康',
+            education: '3',
+            address: ['上海', '普陀'],
+          },
+          {
+            name: '王琦',
+            education: '2',
+            address: ['浙江', '杭州'],
+          }
+        ],
+  
+        columns: [
+          {
+            type: 'input',
+            label: '姓名',
+            prop: 'name',
+            placeholder: '请输入姓名',
+            readonly: false,
+            columnData: {
+              props: {
+                width: 250
+              }
+            }
+          },
+
+          {
+            type: 'select',
+            label: '学历',
+            prop: 'education',
+            readonly: false,
+            ajaxOptions: {
+              localList: [
+                {
+                  value: '1',
+                  label: '本科'
+                },
+                {
+                  value: '2',
+                  label: '大专'
+                },
+                {
+                  value: '3',
+                  label: '职高'
+                }
+              ]
+            },
+            columnData: {
+              props: {
+                width: 250
+              }
+            }
+          },
+
+          {
+            type: 'cascader',
+            label: '住址',
+            prop: 'address',
+            placeholder: '选择省市',
+            renderReadonly: function(h, props, form, key) {
+              const value = form[key]
+              return h('span', {
+                style: {
+                  display: 'inline-block',
+                  color: 'red',
+                  padding: '3px 0'
+                }
+              }, value.join(' / '))
+            },
+            cascaderData: {
+              props: {
+                props: { checkStrictly: false },
+              }
+            },
+            ajaxOptions: {
+              localList: [
+                {
+                  value: '上海',
+                  label: '上海',
+                  children: [
+                    { value: '普陀', label: '普陀' },
+                    { value: '黄埔', label: '黄埔' },
+                    { value: '徐汇', label: '徐汇' }
+                  ]
+                },
+                {
+                  value: '江苏',
+                  label: '江苏',
+                  children: [
+                    { value: '南京', label: '南京' },
+                    { value: '苏州', label: '苏州' },
+                    { value: '无锡', label: '无锡' }
+                  ]
+                },
+                {
+                  value: '浙江',
+                  label: '浙江',
+                  children: [
+                    { value: '杭州', label: '杭州' },
+                    { value: '宁波', label: '宁波' },
+                    { value: '嘉兴', label: '嘉兴' }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      };
+    },
+    methods: {
+      handleClick1() {
+        this.$refs.table.disable()
+      },
+      handleClick2() {
+        this.$refs.table.enable()
+        this.$refs.table.disable([[0, ['address']], [2, ['name', 'education']]])
+      },
+      handleClick3() {
+        this.$refs.table.enable()
+      }
+    }
+  };
+  </script>
+```
+:::
+
 ### 表格分页
 
 数据量过大时,可以使用分页来展示。
@@ -966,19 +1205,299 @@ table-widgets组件和form-widgets组件中的控件都源于widgets对象,其�
 ```
 :::
 
+### 自定义组件嵌入表格
+
+支持自定义组件嵌入表格,来满足各种需求.
+
+:::demo 1.组件编写: 自定义组件需满足`v-model`的使用姿势。其他可选props属性请参考下面demo。 2.组件安装: 在应用安装前,可以使用`app.$widgets.use(自定义组件名, 自定义组件)`(下面demo的安装方式只是演示,不推荐这么使用。在根应用安装的好处是，安装完组定义组件后，form-wodgets组件也能使用自定义组件。)
+```html
+  <template>
+    <div>
+      <el-switch
+        style="margin: 0 0 20px 10px;"
+        v-model="readonly"
+        active-text="只读"
+        inactive-text="编辑"
+        @change="handleChange"
+      >
+      </el-switch>
+
+      <el-table-widgets
+        :data="tableData"
+        :columns="columns"
+      >
+      </el-table-widgets>
+    </div>
+  </template>
+
+  <script>
+  const CustomInput = {
+    props: {
+      type: {
+        type: String,
+        default: 'custom-input'
+      },
+      value: null,
+      placeholder: null,
+      renderReadonly: {
+        type: Function
+      },
+      readonly: {
+        type: Boolean,
+        default: false
+      },
+      disabled: {
+        type: Boolean,
+        default: true
+      }
+    },
+    render: function(h) {
+      const vm = this;
+      if (this.readonly) return renderReadonly && renderReadonly.call(this, h)
+      return h("input", {
+        domProps: { value: vm.value, disabled: vm.disabled },
+        attrs: {
+          placeholder: vm.placeholder,
+        },
+        style: {
+          width: '95%',
+          height: '28px',
+          padding: "2px 5px",
+          border: "1px solid #ccc",
+          'border-radius': '3px'
+        },
+        on: {
+          input(evt) {
+            vm.$emit("input", evt.target.value);
+          },
+        },
+       });
+    },
+  }
+
+  export default {
+    data() {
+      return {
+        readonly: false,
+        tableData: [
+          {
+            name: '徐志伟',
+            hobby: '睡觉',
+          },
+          {
+            name: '徐志康',
+            hobby: '散步',
+          },
+          {
+            name: '王琦',
+            hobby: '玩3A',
+          }
+        ],
+  
+        columns: [
+          {
+            type: 'custom-input',
+            label: '自定义输入框',
+            prop: 'name',
+            placeholder: '请输入姓名',
+            readonly: false
+          },
+
+          {
+            type: 'input',
+            label: 'element输入框',
+            prop: 'hobby',
+            placeholder: '请输入爱好',
+            readonly: false,
+            inputData: {
+              props: {
+                size: 'medium'
+              }
+            }
+          },
+        ]
+      };
+    },
+    beforeCreate() {
+      if (!this._installed) {
+        this._installed = true
+        this.$widgets.use('custom-input', CustomInput)
+      }
+    },
+    methods: {
+      handleChange(val) {
+        this.columns = this.columns.map((_) => {
+          _.readonly = val;
+          return _;
+        });
+      }
+    }
+  };
+  </script>
+```
+:::
+
+### 自定义组件校验
+
+对自定义组件进行校验。
+
+:::demo 自定义组件嵌入到`table-widgets`或`form-widgets`中,会被`el-form-item`组件包裹,则使用`vm.$parent.validate`方法进行校验即可。
+```html
+  <template>
+    <div>
+      <el-switch
+        style="margin: 0 0 20px 10px;"
+        v-model="readonly"
+        active-text="只读"
+        inactive-text="编辑"
+        @change="handleChange"
+      >
+      </el-switch>
+
+      <el-table-widgets
+        border
+        :data="tableData"
+        :columns="columns"
+      >
+      </el-table-widgets>
+    </div>
+  </template>
+
+  <script>
+  const CustomInput2 = {
+    props: {
+      type: {
+        type: String,
+        default: 'custom-input'
+      },
+      value: null,
+      placeholder: null,
+      renderReadonly: {
+        type: Function
+      },
+      readonly: {
+        type: Boolean,
+        default: false
+      },
+      disabled: {
+        type: Boolean,
+        default: true
+      }
+    },
+    render: function(h) {
+      const vm = this;
+      if (this.readonly) return renderReadonly && renderReadonly.call(this, h);
+      return h("input", {
+        domProps: { value: vm.value, disabled: vm.disabled },
+        attrs: {
+          placeholder: vm.placeholder,
+        },
+        style: {
+          width: '95%',
+          height: '28px',
+          padding: "2px 5px",
+          border: "1px solid #ccc",
+          'border-radius': '3px'
+        },
+        on: {
+          input(evt) {
+            vm.$emit("input", evt.target.value);
+            vm.$parent.validate('change');
+          },
+        },
+       });
+    },
+  }
+
+  export default {
+    data() {
+      return {
+        readonly: false,
+        tableData: [
+          {
+            name: '',
+            hobby: '',
+          },
+          {
+            name: '徐志康',
+            hobby: '散步',
+          },
+          {
+            name: '王琦',
+            hobby: '玩3A',
+          }
+        ],
+  
+        columns: [
+          {
+            type: 'custom-input2',
+            label: '自定义输入框',
+            prop: 'name',
+            placeholder: '请输入姓名',
+            readonly: false,
+            rules: [
+              { 
+                validator: (rule, value, callback) => value ? callback() : callback(new Error(rule.message)), 
+                required: true, 
+                message: '请输入姓名', 
+                trigger: 'change'
+              }
+            ]
+          },
+
+          {
+            type: 'input',
+            label: 'element输入框',
+            prop: 'hobby',
+            placeholder: '请输入爱好',
+            readonly: false,
+            inputData: {
+              props: {
+                size: 'medium'
+              }
+            },
+            rules: [
+              { 
+                validator: (rule, value, callback) => value ? callback() : callback(new Error(rule.message)), 
+                required: true, 
+                message: '请输入爱好', 
+                trigger: 'change'
+              }
+            ]
+          },
+        ]
+      };
+    },
+    beforeCreate() {
+      if (!this._installed) {
+        this._installed = true
+        this.$widgets.use('custom-input2', CustomInput2)
+      }
+    },
+    methods: {
+      handleChange(val) {
+        this.columns = this.columns.map((_) => {
+          _.readonly = val;
+          return _;
+        });
+      }
+    }
+  };
+  </script>
+```
+:::
+
 ### TableWidgets Attributes
 #### 以下是比较常用的属性,其他属性请参考Table组件
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | data | 显示的数据 | array | — | — |
-| height | Table 的高度，默认为自动高度。如果 height 为 number 类型，单位 px；如果 height 为 string 类型，则这个高度会设置为 Table 的 style.height 的值，Table 的高度会受控于外部样式。  | string/number | — | — |
-| max-height | Table 的最大高度。合法的值为数字或者单位为 px 的高度。 | string/number | — | — |
+| height | Table 的高度。  | string/number | — | — |
+| max-height | Table 的最大高度。 | string/number | — | — |
 | border | 是否带有纵向边框 | boolean | — | false |
 | size | Table 的尺寸 | string | medium / small / mini | — |
-| fit | 列的宽度是否自撑开 | boolean | — | true |
-| row-key | 行数据的 Key，用来优化 Table 的渲染；在使用 reserve-selection 功能与显示树形数据时，该属性是必填的。类型为 String 时，支持多层访问：`user.info.id`，但不支持 `user.info[0].id`，此种情况请使用 `Function`。 | Function(row)/String | — | — |
-| empty-text | 空数据时显示的文本内容，也可以通过 `slot="empty"` 设置 | String | — | 暂无数据 |
-| default-sort | 默认的排序列的 prop 和顺序。它的`prop`属性指定默认的排序的列，`order`指定默认排序的顺序| Object | `order`: ascending, descending | 如果只指定了`prop`, 没有指定`order`, 则默认顺序是ascending |
+| row-key | 使用排序时必须要加该属性。 | Function(row)/String | — | — |
+| empty-text | 空数据时显示的文本内容。 | String | — | 暂无数据 |
 | columns  | 定义列的配置 | Array | — | 成员配置参考下面文档|
 | props | 和columns的成员配置一致，用于转换columns成员的key | object | — | 具体参考下面文档 |
 | mode | 是否开启分页功能 | string | — | pagination/'' |
@@ -998,10 +1517,10 @@ table-widgets组件和form-widgets组件中的控件都源于widgets对象,其�
 | placeholder   | 控件占位符 | string      |                  —              |  — |
 | readonly   | 控件只读(渲染文本) | boolean      |                  —              |  false |
 | rules   | 控件校验规则 | array/object      |                  —              |   — |
-| ajaxOptions   | 接口请求(具体参考各个控件的文档) | object      |                  —              |   — |
-| renderWidget   | 自定义控件渲染 | function      |                  —              |   — |
-| renderReadonly   | 自定义只读控件渲染 | function      |                  —              |   — |
-| columnData   | el-table-column组件的配置 | object      |                  —              |   具体参考下面文档 |
+| ajax-options   | 接口请求(具体参考各个控件的文档) | object      |                  —              |   — |
+| render-widget   | 自定义控件渲染 | function      |                  —              |   — |
+| render-readonly   | 自定义只读控件渲染 | function      |                  —              |   — |
+| column-data   | el-table-column组件的配置 | object      |                  —              |   具体参考下面文档 |
 | type + Data   | 控件组件的配置 | object      |                  —              |   — |
 
 ### columnData.props
@@ -1009,14 +1528,12 @@ table-widgets组件和form-widgets组件中的控件都源于widgets对象,其�
 #### 以下是比较常用的属性,其他属性请参考TableColumn组件属性
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| type | 对应列的类型。如果设置了 `selection` 则显示多选框；如果设置了 `index` 则显示该行的索引（从 1 开始计算）；如果设置了 `expand` 则显示为一个可展开的按钮 | string | selection/index/expand | — |
-| index | 如果设置了 `type=index`，可以通过传递 `index` 属性来自定义索引 | number, Function(index) | - | - |
 | label | 显示的标题 | string | — | — |
 | prop | 对应列内容的字段名，也可以使用 property 属性 | string | — | — |
 | width | 对应列的宽度 | string | — | — |
-| min-width | 对应列的最小宽度，与 width 的区别是 width 是固定的，min-width 会把剩余宽度按比例分配给设置了 min-width 的列 | string | — | — |
+| min-width | min-width 会把剩余宽度按比例分配给设置了 min-width 的列 | string | — | — |
 | fixed | 列是否固定在左侧或者右侧，true 表示固定在左侧 | string, boolean | true, left, right | — |
-| sortable | 对应列是否可以排序，如果设置为 'custom'，则代表用户希望远程排序，需要监听 Table 的 sort-change 事件 | boolean, string | true, false, 'custom' | false |
+| sortable | 对应列是否可以排序 | boolean, string | true, false, 'custom' | false |
 | resizable | 对应列是否可以通过拖动改变宽度（需要在 el-table 上设置 border 属性为真） | boolean | — | true |
 | show-overflow-tooltip | 当内容过长被隐藏时显示 tooltip | Boolean | — | false |
 | align | 对齐方式 | String | left/center/right | left |
@@ -1048,3 +1565,5 @@ table-widgets组件和form-widgets组件中的控件都源于widgets对象,其�
 | validate | 对table进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。 | Function(callback: Function(boolean, object))
 | validateAll | 对整个table进行校验的方法(内部不走el-form-item组件的校验)，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。 | Function(callback: Function(boolean, object))
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
+| disable | 对可编辑的控件进行禁用 | Function(arr?: [[rowIndex, ['prop1', 'prop2']])
+| enable | 对可编辑的控件进行启用 | Function(arr?: [[rowIndex, ['prop1', 'prop2']])

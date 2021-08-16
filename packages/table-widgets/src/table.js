@@ -26,7 +26,8 @@ const READONLY_VNODE_STYLE = {
 export default {
   data() {
     return {
-      form: {}
+      form: {},
+      widgetItemsProps: {}
     };
   },
   computed: {
@@ -96,11 +97,27 @@ export default {
           return { ...pre, ...rowObject };
         }, {});
         this.form = form;
+        this._setWidgetItemsProps(data);
       }
     }
   },
 
   methods: {
+    _setWidgetItemsProps(data) {
+      const tableColumns = this.tableColumns;
+      this.widgetItemsProps = {};
+      data.forEach((rowData, rowIndex) => {
+        tableColumns.forEach(column => {
+          const key = `row-${rowIndex}-${column.prop}`;
+          this.$set(this.widgetItemsProps, key, {
+            readonly: column.readonly,
+            placeholder: column.placeholder,
+            disabled: column.disabled
+          });
+        });
+      });
+    },
+
     _updateDataValue(tableData, formKey, value) {
       const formKeyArr = formKey.split('-').reverse();
       const [prop, rowIndex] = formKeyArr;
@@ -180,7 +197,7 @@ export default {
                 prop: property,
                 rowIndex
               },
-              props: {
+              props: merge({
                 type: widget.type,
                 readonly: widget.readonly,
                 placeholder: widget.placeholder,
@@ -188,7 +205,7 @@ export default {
                 [typeData]: widget[typeData],
                 ajaxOptions: widget.ajaxOptions,
                 value: form[key]
-              },
+              }, this.widgetItemsProps[key]),
               on: {
                 input(val) {
                   // update user data value
