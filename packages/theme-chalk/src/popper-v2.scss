@@ -1,0 +1,88 @@
+@import "mixins/mixins";
+@import "common/var";
+
+$--el-text-color-primary: #303133;
+$--el-color-white: #fff;
+$--el-border-color-light: #e4e7ed;
+
+@include b(popper-v2) {
+  position: relative;
+
+  $arrow-selector: #{& + '__arrow'};
+
+  @include e(default) {
+    position: absolute;
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 2000;
+    font-size: 12px;
+    line-height: 1.2;
+    min-width: 10px;
+    word-wrap: break-word;
+    visibility: visible;
+
+    @include when(dark) {
+      color: $--el-color-white;
+      background: $--el-text-color-primary;
+      #{$arrow-selector}::before {
+        background: $--el-text-color-primary;
+        right: 0;
+      }
+    }
+
+    @include when(light) {
+      background: $--el-color-white;
+      border: 1px solid $--el-border-color-light;
+
+      #{$arrow-selector}::before {
+        border: 1px solid $--el-border-color-light;
+        background: $--el-color-white;
+        right: 0;
+      }
+    }
+
+    @include when(pure) {
+      padding: 0;
+    }
+
+    $placements: (
+      'top': 'bottom',
+      'bottom': 'top',
+      'left': 'right',
+      'right': 'left',
+    );
+
+    @each $placement, $opposite in $placements {
+      &[data-popper-placement^='#{$placement}'] > #{$arrow-selector} {
+        #{$opposite}: -5px;
+      }
+    }
+
+    @each $placement, $adjacency in ('top': 'left', 'bottom': 'right', 'left': 'bottom', 'right': 'top') {
+      &.is-light[data-popper-placement^='#{$placement}'] {
+        #{$arrow-selector}::before {
+          border-#{$placement}-color: transparent;
+          border-#{$adjacency}-color: transparent;
+        }
+      }
+    }
+  }
+
+  @include e(arrow) {
+    position: absolute;
+    z-index: -1;
+    width: 10px;
+    height: 10px;
+
+    &::before {
+      position: absolute;
+      z-index: -1;
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: $--el-text-color-primary;
+      box-sizing: border-box;
+      transform: rotate(45deg);
+    }
+  }
+}
