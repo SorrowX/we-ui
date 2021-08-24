@@ -54,9 +54,10 @@
 
       .el-icon-close {
         flex: none;
-        background-color: $--color-text-placeholder;
-        color: $--color-white;
-
+        background-color: #c0c4cc;
+        right: -7px;
+        top: 0;
+        color: #909399;
         &:hover {
           background-color: $--color-text-secondary;
         }
