@@ -256,7 +256,7 @@ export default {
             prop: widget.prop
           },
           model: { // v-mode="form[widget['prop']]"
-            expression: "form[widget['prop']]",
+            expression: 'form[widget[\'prop\']]',
             value: model[widget['prop']],
             callback: function($$v) {
               model[widget['prop']] = $$v;

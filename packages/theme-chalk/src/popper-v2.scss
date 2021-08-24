@@ -9,6 +9,7 @@ $--el-border-color-light: #e4e7ed;
   position: relative;
 
   $arrow-selector: #{& + '__arrow'};
+  $default-selector: #{& + '__default'};
 
   @include e(default) {
     position: absolute;
@@ -43,6 +44,7 @@ $--el-border-color-light: #e4e7ed;
 
     @include when(pure) {
       padding: 0;
+      border: 0;
     }
 
     $placements: (

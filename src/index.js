@@ -99,6 +99,7 @@ import UploadWidget from '../packages/upload-widget/index.js';
 import FormWidgets from '../packages/form-widgets/index.js';
 import TableWidgets from '../packages/table-widgets/index.js';
 import ScrollbarV2 from '../packages/scrollbar-v2/index.js';
+import PopperInput from '../packages/popper-input/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 import ImageViewer from 'element-ui/packages/image/src/image-viewer';
@@ -199,6 +200,7 @@ const components = [
   FormWidgets,
   TableWidgets,
   ScrollbarV2,
+  PopperInput,
   CollapseTransition,
   ImageViewer
 ];
@@ -340,5 +342,6 @@ export default {
   UploadWidget,
   FormWidgets,
   TableWidgets,
-  ScrollbarV2
+  ScrollbarV2,
+  PopperInput
 };

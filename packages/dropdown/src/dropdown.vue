@@ -241,7 +241,7 @@
       },
       initDomOperation() {
         this.dropdownElm = this.popperElm;
-        this.menuItems = this.dropdownElm.querySelectorAll("[tabindex='-1']");
+        this.menuItems = this.dropdownElm.querySelectorAll('[tabindex="-1"]'); // "[tabindex='-1']"
         this.menuItemsArray = [].slice.call(this.menuItems);
 
         this.initEvent();

@@ -7,8 +7,6 @@ export default function buildModifier(props, externalModifiers) {
     gpuAcceleration
   } = props;
 
-  console.log('offset: ', offset);
-
   const modifiers = [
     {
       name: 'offset', // 控制popper的左右和上下位置

@@ -360,6 +360,10 @@
             {
               "path": "/scrollbar-v2",
               "title": "ScrollbarV2"
+            },
+            {
+              "path": "/popper-input",
+              "title": "PopperInput"
             }
           ]
         }
@@ -727,6 +731,10 @@
             {
               "path": "/scrollbar-v2",
               "title": "ScrollbarV2"
+            },
+            {
+              "path": "/popper-input",
+              "title": "PopperInput"
             }
           ]
         }
@@ -1094,6 +1102,10 @@
             {
               "path": "/scrollbar-v2",
               "title": "ScrollbarV2"
+            },
+            {
+              "path": "/popper-input",
+              "title": "PopperInput"
             }
           ]
         }
@@ -1461,6 +1473,10 @@
             {
               "path": "/scrollbar-v2",
               "title": "ScrollbarV2"
+            },
+            {
+              "path": "/popper-input",
+              "title": "PopperInput"
             }
           ]
         }

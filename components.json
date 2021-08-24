@@ -97,5 +97,6 @@
   "upload-widget": "./packages/upload-widget/index.js",
   "form-widgets": "./packages/form-widgets/index.js",
   "table-widgets": "./packages/table-widgets/index.js",
-  "scrollbar-v2": "./packages/scrollbar-v2/index.js"
+  "scrollbar-v2": "./packages/scrollbar-v2/index.js",
+  "popper-input": "./packages/popper-input/index.js"
 }
