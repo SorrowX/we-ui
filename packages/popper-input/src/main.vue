@@ -199,7 +199,7 @@ export default {
 
       if (multiple) {
         if (!Array.isArray(value)) {
-          throw new Error(`in multiple mode, value must be array.`);
+          throw new Error('in multiple mode, value must be array.');
         }
         if (collapseTags && value.length > 0) {
           if (value.length === 1) {
