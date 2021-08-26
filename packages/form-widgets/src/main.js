@@ -175,8 +175,8 @@ export default {
     _setLabelBackgroundColor(backgroundColor) {
       this.$nextTick(() => {
         const { layout } = this;
-        if (layout === 'grid') {
-          const parent = this.formInstance.$el;
+        const parent = (this.formInstance || {}).$el;
+        if (layout === 'grid' && parent) {
           const labels = parent.querySelectorAll('label[class*="el-form-item__label"]');
           labels.forEach(dom => {
             dom.style.background = backgroundColor || this.labelBackgroundColor;
@@ -411,7 +411,7 @@ export default {
 
   computed: {
     formInstance() {
-      return this.$refs.formInstance;
+      return this.$refs.formInstance || {};
     },
 
     ...mapStates({

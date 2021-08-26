@@ -13,7 +13,7 @@ export default {
 
   computed: {
     rawDataList() {
-      return this.ajaxOptions.localList || this.dataList;
+      return this.ajaxOptions.localList || [];
     },
     mergedAjaxOptions() {
       return merge({}, defaultAjaxOptions, this.ajaxOptions);
@@ -31,7 +31,6 @@ export default {
         ajaxOptions.ajaxResult = null;
         const list = error && error(e);
         if (Array.isArray(list) && list.every(item => isObject(item))) {
-          ajaxOptions.localList = list;
           cb && cb(null, list);
         } else {
           cb && cb(e);
@@ -61,7 +60,6 @@ export default {
             });
 
             if (Array.isArray(finalList)) {
-              ajaxOptions.localList = finalList;
               return callback && callback(null, finalList);
             } else {
               const tip = 'require return Array<object> in success callback or configure the path property in ajaxOptions';
@@ -117,9 +115,10 @@ export default {
       } else if (askNetwork) {
         this.getDataListFromApi((error, list) => {
           if (!error) {
+            this.ajaxOptions.localList = list;
             this.dataList = convertData(list);
           } else {
-            this.dataList = [];
+            this.ajaxOptions.localList = this.dataList = [];
           }
           callback && callback(error ? error : null, this.dataList);
         });
