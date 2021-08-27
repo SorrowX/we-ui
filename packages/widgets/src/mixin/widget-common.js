@@ -21,14 +21,23 @@ export default {
   },
 
   methods: {
-    getDataListFromApi(callback) {
-      const ajaxOptions = this.mergedAjaxOptions;
+    // 用户手动请求接口获取数据
+    request(params, callback) {
+      params = !isObject(params) ? {} : params;
+
+      this.setDataList({
+        force: true,
+        callback,
+        ajaxOptions: Object.keys(params).length > 0 ? params : this.mergedAjaxOptions
+      });
+    },
+    getDataListFromApi(ajaxOptions, callback) {
       const before = ajaxOptions.before;
       const success = ajaxOptions.success;
       const error = ajaxOptions.error;
 
       const handleErrorCallback = (e, cb) => {
-        ajaxOptions.ajaxResult = null;
+        this.ajaxOptions.ajaxResult = null;
         const list = error && error(e);
         if (Array.isArray(list) && list.every(item => isObject(item))) {
           cb && cb(null, list);
@@ -43,10 +52,10 @@ export default {
         },
         success: (data) => {
           try {
-            ajaxOptions.ajaxResult = JSON.parse(data);
+            const ajaxResult = this.ajaxOptions.ajaxResult = JSON.parse(data);
 
             let apiList = success && success(JSON.parse(data));
-            let list = getValueByPath(ajaxOptions.ajaxResult, ajaxOptions.path);
+            let list = getValueByPath(ajaxResult, ajaxOptions.path);
 
             let finalList;
             ;[list, apiList].some(_ => {
@@ -104,25 +113,32 @@ export default {
       const {
         askNetwork = true,
         callback = () => {},
-        convertData = this.getDataList
+        convertData = this.getDataList,
+        force = false,
+        ajaxOptions = this.mergedAjaxOptions
       } = options;
-      const ajaxOptions = this.mergedAjaxOptions;
       const { localList = [] } = ajaxOptions;
-      if (this.dataList.length) return;
-      if (Array.isArray(localList) && localList.length > 0) {
+      if (this.dataList.length && !force) return;
+      if (Array.isArray(localList) && localList.length > 0 && !force) {
         this.dataList = convertData(localList);
         callback && callback(null, this.dataList);
-      } else if (askNetwork) {
-        this.getDataListFromApi((error, list) => {
+      } else if (askNetwork || force) {
+        this.getDataListFromApi(ajaxOptions, (error, rawData) => {
           if (!error) {
-            this.ajaxOptions.localList = list;
-            this.dataList = convertData(list);
+            const serializeData = convertData(rawData);
+            this.dataList = serializeData;
+            this._setLocalList(rawData);
           } else {
-            this.ajaxOptions.localList = this.dataList = [];
+            this.dataList = [];
+            this._setLocalList([]);
           }
           callback && callback(error ? error : null, this.dataList);
         });
       }
+    },
+
+    _setLocalList(rawData) {
+      this.$set(this.ajaxOptions, 'localList', rawData);
     },
 
     _renderReadonly() {
@@ -157,7 +173,7 @@ export default {
       const mergeChange = {
         on: {
           change: typeof userChange === 'function' || Array.isArray(userChange)
-            ? [innerChange].concat(userChange)
+            ? [].concat(userChange, innerChange)
             : innerChange
         }
       };

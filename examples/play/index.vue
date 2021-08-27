@@ -1,305 +1,254 @@
 <template>
   <div class="spec">
-    <!-- <el-popper
-      :offset="0"
-      style="width: 350px;"
-      effect="light"
-      v-model="visible"
-      :append-to-body="false"
-      trigger="click"
-      :stopPopperMouseEvent="true"
-      transition="el-zoom-in-top"
-      :gpuAcceleration="false"
-      :popperOptions="popperOptions"
-      :showArrow="false"
-      pure
-    >
-      <template slot="trigger">
-        <div class="test-trigger">
-          <el-input style="width: 100%;" />
-        </div>
-      </template>
-      <template slot="default">
-        <div style="border: 1px solid #ccc; height: 200px; width: 400px">
-          {{ msg }}
-        </div>
-      </template>
-    </el-popper> -->
-
-    <el-row style="position: fixed; right: 0px; top: 0; width: 100%;">
-      <el-col :span="16">
-        <div style="height: 100px"></div> 
-      </el-col>
-      <el-col :span="8">
-        <el-popper-input 
-          placeholder="请选择" 
-          clearable
-          filterable
-          :multiple="false"
-          style="width:200px"
-          v-model="value"
-          @enter="handleSearch"
-        >
-          <template>
-            <div style="height: 400px; width: 600px;">我是自定义组件</div>
-          </template>
-        </el-popper-input>
-
-        <el-cascader
-    v-model="value"
-    :options="options"></el-cascader>
-      </el-col>
-    </el-row>
+    <el-form-widgets 
+      ref="comp"
+      :data="data" 
+      :model="model"
+      :rules="rules"
+      layout="grid"
+      :show-action-buttons="true"
+      cancelText="取消"
+      submitText="提交"
+      @on-submit="handleSubmit"
+      @on-cancel="handleCancel"
+      @change="handleChange"
+    />
   </div>
 </template>
 
 <script>
-import ElPopper from '../../packages/popper-v2/index.js'
-import ElPopperInput from '../../packages/popper-input/index.js'
-export default {
-  components: { ElPopper, ElPopperInput },
-  data() {
-    return {
-      visible: false,
-      msg: 'Rem is the best girl',
-      popperOptions: {
+const CustomInput2 = {
+  props: {
+    type: {
+      type: String,
+      default: 'custom-input'
+    },
+    value: null,
+    placeholder: null,
+    renderReadonly: {
+      type: Function
+    },
+    readonly: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: true
+    },
+    bool: null,
+    str: null
+  },
+  created() {
+    console.log(this.$props)
+  },
+  render: function(h) {
+    const vm = this;
+    if (this.readonly) return renderReadonly && renderReadonly.call(this, h);
+    return h("input", {
+      domProps: { value: vm.value, disabled: vm.disabled },
+      attrs: {
+        placeholder: vm.placeholder,
       },
-      value: [
-        {
-          label: '苹果',
-          value: 'apple'
+      style: {
+        width: '95%',
+        height: '28px',
+        padding: "2px 5px",
+        border: "1px solid #ccc",
+        'border-radius': '3px'
+      },
+      on: {
+        input(evt) {
+          vm.$emit("input", evt.target.value);
+          vm.$parent.validate('change');
         },
-        {
-          label: '美人蕉',
-          value: 'banner'
-        },
-        {
-          label: '我是花果山美猴王齐天大圣孙悟空啊',
-          value: 'mon'
-        },
-        {
-          label: '志康',
-          value: 'kang'
-        },
-        {
-          label: '渺小的室长',
-          value: 'zhang'
-        }
-      ],
-
-      value: [],
-        options: [{
-          value: 'zhinan',
-          label: '指南',
-          children: [{
-            value: 'shejiyuanze',
-            label: '设计原则',
-            children: [{
-              value: 'yizhi',
-              label: '一致'
-            }, {
-              value: 'fankui',
-              label: '反馈'
-            }, {
-              value: 'xiaolv',
-              label: '效率'
-            }, {
-              value: 'kekong',
-              label: '可控'
-            }]
-          }, {
-            value: 'daohang',
-            label: '导航',
-            children: [{
-              value: 'cexiangdaohang',
-              label: '侧向导航'
-            }, {
-              value: 'dingbudaohang',
-              label: '顶部导航'
-            }]
-          }]
-        }, {
-          value: 'zujian',
-          label: '组件',
-          children: [{
-            value: 'basic',
-            label: 'Basic',
-            children: [{
-              value: 'layout',
-              label: 'Layout 布局'
-            }, {
-              value: 'color',
-              label: 'Color 色彩'
-            }, {
-              value: 'typography',
-              label: 'Typography 字体'
-            }, {
-              value: 'icon',
-              label: 'Icon 图标'
-            }, {
-              value: 'button',
-              label: 'Button 按钮'
-            }]
-          }, {
-            value: 'form',
-            label: 'Form',
-            children: [{
-              value: 'radio',
-              label: 'Radio 单选框'
-            }, {
-              value: 'checkbox',
-              label: 'Checkbox 多选框'
-            }, {
-              value: 'input',
-              label: 'Input 输入框'
-            }, {
-              value: 'input-number',
-              label: 'InputNumber 计数器'
-            }, {
-              value: 'select',
-              label: 'Select 选择器'
-            }, {
-              value: 'cascader',
-              label: 'Cascader 级联选择器'
-            }, {
-              value: 'switch',
-              label: 'Switch 开关'
-            }, {
-              value: 'slider',
-              label: 'Slider 滑块'
-            }, {
-              value: 'time-picker',
-              label: 'TimePicker 时间选择器'
-            }, {
-              value: 'date-picker',
-              label: 'DatePicker 日期选择器'
-            }, {
-              value: 'datetime-picker',
-              label: 'DateTimePicker 日期时间选择器'
-            }, {
-              value: 'upload',
-              label: 'Upload 上传'
-            }, {
-              value: 'rate',
-              label: 'Rate 评分'
-            }, {
-              value: 'form',
-              label: 'Form 表单'
-            }]
-          }, {
-            value: 'data',
-            label: 'Data',
-            children: [{
-              value: 'table',
-              label: 'Table 表格'
-            }, {
-              value: 'tag',
-              label: 'Tag 标签'
-            }, {
-              value: 'progress',
-              label: 'Progress 进度条'
-            }, {
-              value: 'tree',
-              label: 'Tree 树形控件'
-            }, {
-              value: 'pagination',
-              label: 'Pagination 分页'
-            }, {
-              value: 'badge',
-              label: 'Badge 标记'
-            }]
-          }, {
-            value: 'notice',
-            label: 'Notice',
-            children: [{
-              value: 'alert',
-              label: 'Alert 警告'
-            }, {
-              value: 'loading',
-              label: 'Loading 加载'
-            }, {
-              value: 'message',
-              label: 'Message 消息提示'
-            }, {
-              value: 'message-box',
-              label: 'MessageBox 弹框'
-            }, {
-              value: 'notification',
-              label: 'Notification 通知'
-            }]
-          }, {
-            value: 'navigation',
-            label: 'Navigation',
-            children: [{
-              value: 'menu',
-              label: 'NavMenu 导航菜单'
-            }, {
-              value: 'tabs',
-              label: 'Tabs 标签页'
-            }, {
-              value: 'breadcrumb',
-              label: 'Breadcrumb 面包屑'
-            }, {
-              value: 'dropdown',
-              label: 'Dropdown 下拉菜单'
-            }, {
-              value: 'steps',
-              label: 'Steps 步骤条'
-            }]
-          }, {
-            value: 'others',
-            label: 'Others',
-            children: [{
-              value: 'dialog',
-              label: 'Dialog 对话框'
-            }, {
-              value: 'tooltip',
-              label: 'Tooltip 文字提示'
-            }, {
-              value: 'popover',
-              label: 'Popover 弹出框'
-            }, {
-              value: 'card',
-              label: 'Card 卡片'
-            }, {
-              value: 'carousel',
-              label: 'Carousel 走马灯'
-            }, {
-              value: 'collapse',
-              label: 'Collapse 折叠面板'
-            }]
-          }]
-        }, {
-          value: 'ziyuan',
-          label: '资源',
-          children: [{
-            value: 'axure',
-            label: 'Axure Components'
-          }, {
-            value: 'sketch',
-            label: 'Sketch Templates'
-          }, {
-            value: 'jiaohu',
-            label: '组件交互文档'
-          }]
-        }]
-    }
-  },
-  methods: {
-    handleSearch(search) {
-      console.log('searchKey: ', search)
-    }
-  },
-  mounted() {
-    window.xx = this
+      },
+      });
   },
 }
+export default {
+    data() {
+      return {
+        model: {
+          name: '徐志伟',
+          region: '',
+          date: '',
+          delivery: false,
+          type: ['地推活动'],
+          resource: '0',
+          desc: ''
+        },
+        data: [
+          {
+            type: 'input',
+            span: 12,
+            placeholder: '请输入活动名称',
+            prop: 'name',
+            label: '徐志伟',
+            hidden: false,
+            'v-bind': {
+              bool: true,
+              str: 'str'
+            }
+          },
+          {
+            type: 'select',
+            span: 12,
+            placeholder: '请选择活动区域',
+            prop: 'region',
+            label: '活动区域',
+            ajaxOptions: {
+              localList: [
+                {
+                  value: "区域1",
+                  label: "区域1",
+                },
+                {
+                  value: "区域2",
+                  label: "区域2",
+                }
+              ],
+            },
+          },
+          {
+            type: 'date-picker',
+            span: 12,
+            placeholder: '选择日期',
+            prop: 'date',
+            label: '活动时间'
+          },
+          {
+            type: 'switch',
+            span: 12,
+            placeholder: '',
+            prop: 'delivery',
+            label: '即时配送'
+          },
+          {
+            type: 'checkbox',
+            span: 12,
+            placeholder: '请输入活动名称',
+            prop: 'type',
+            label: '活动',
+            ajaxOptions: {
+              localList: [
+                {
+                  label: "美食/餐厅线上活动",
+                  value: "美食/餐厅线上活动",
+                },
+                {
+                  label: "地推活动",
+                  value: "地推活动",
+                },
+                {
+                  label: "线下主题活动",
+                  value: "线下主题活动",
+                },
+                {
+                  label: "单纯品牌曝光",
+                  value: "单纯品牌曝光",
+                }
+              ],
+            },
+          },
+          {
+            type: 'radio',
+            span: 12,
+            prop: 'resource',
+            label: '特殊资源hahaha',
+            hidden: false,
+            radioData: {
+              on: {
+                change: function(value) {
+                  console.log(this, value)
+                  window.xxx = this
+                }
+              }
+            },
+            "ajaxOptions":{
+                "url":"/emap/sys/eetablecore/dic/82.do?sign=B39974D1B7CA7300066854D2B6355674&time=1630047538577",
+                "type":"get",
+                "path":"datas.code.rows",
+                "props":{
+                    "label":"name",
+                    "value":"id"
+                }
+            }
+          },
+          {
+            type: 'input',
+            span: 24,
+            placeholder: '活动形式',
+            prop: 'desc',
+            label: '活动形式',
+            inputData: {
+              props: {
+                type: 'textarea'
+              },
+              attrs: {
+                rows: 5
+              }
+            }
+          },
+        ],
+        rules: {
+          name: [{ required: true, min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }],
+          region: [
+            { required: true, message: '请选择活动区域', trigger: 'change' }
+          ],
+          date: [
+            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          ],
+          type: [
+            { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+          ],
+          resource: [
+            { required: true, message: '请选择活动资源', trigger: 'change' }
+          ],
+          desc: [
+            { required: true, message: '请填写活动形式', trigger: 'blur' }
+          ]
+        }
+      };
+    },
+    methods: {
+      handleSubmit() {
+        this.$refs.comp.validate((valid, invalidFields) => {
+          console.log(valid, invalidFields)
+        })
+      },
+      handleCancel() {
+        this.$refs.comp.resetFields()
+      },
+      handleChange(...args) {
+        console.log('change: ', args)
+      }
+    },
+    mounted() {
+      setTimeout(() => {
+        this.data[5]['hidden'] = true
+        // this.data[0]['rules'] = [{ required: true, min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }]
+
+        this.rules.date[0].required = false
+
+        
+        console.log('10s', this.data)
+      }, 10 * 1000)
+
+      setTimeout(() => {
+        this.data[5]['hidden'] = false
+        console.log('15s', this.data)
+
+      }, 15 * 1000)
+    },
+    beforeCreate() {
+      if (!this._installed) {
+        this._installed = true
+        this.$widgets.use('custom', CustomInput2)
+      }
+    },
+  };
 </script>
 
 <style scoped>
-.spec {
-  /* height: 100px; */
-  /* overflow: hidden; */
-  /* border: 1px solid red; */
-}
 </style>

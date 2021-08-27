@@ -56,6 +56,7 @@ export default Vue.extend({
         placeholder: widget[placeholderKey],
         readonly: widget[readonlyKey],
         rules: getRules(widget[rulesKey], widget[requiredKey], `${widget[labelKey]}必须填写!`),
+        'v-bind': widget['v-bind'] || {},
 
         // 网络请求相关属性
         ajaxOptions: merge({}, ajaxOptions, widget[ajaxOptionsKey] || {}),

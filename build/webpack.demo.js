@@ -33,7 +33,18 @@ const webpackConfig = {
     host: '0.0.0.0',
     port: isPlay ? 8085 : 8088,
     publicPath: '/',
-    hot: true
+    hot: true,
+    proxy: {
+      '/emap/': {
+        target: 'http://172.31.29.224:8080/',
+        changeOrigin: true,
+        bypass: (req) => {
+          req.headers = req.headers || {};
+          req.headers.referer = 'http://172.31.29.224:8080/';
+          req.headers.cookie = '_FPU=KCu0y0oYSX9VKU8V0yhOsO2BpXMoKegvfeDCtkJGLEm8d62eNRbtrwANgHWLiqyVKPL8DwuEeybSQZI6Zo7.lrZk2X909kJDkDiHSkQthuKOgj_bZiieoggcQfCp08p7I51gIOMbmEFkpwPICfDdOKjHwP2bYLFz3umAWVCHmbA*';
+        }
+      }
+    }
   },
   performance: {
     hints: false

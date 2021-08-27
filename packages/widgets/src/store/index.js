@@ -2,7 +2,16 @@ import Watcher from './watcher';
 
 Watcher.prototype.mutations = {
   setData(states, data) {
-    const widgets = this.createWidgets(data);
+    const newWidgets = this.createWidgets(data);
+    const oldWidgets = states.widgets.slice();
+    const widgets = [];
+    newWidgets.forEach(widget => {
+      const oldWidget = oldWidgets.find(_ => _.prop === widget.prop);
+      if (oldWidget) {
+        widget.ajaxOptions = oldWidget.ajaxOptions;
+      }
+      widgets.push(widget);
+    });
     states.widgets = widgets;
     states.widgetsGroup = this.createWidgetGroup(widgets);
     states.form = this.createForm(widgets);

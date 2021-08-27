@@ -118,9 +118,7 @@ export default {
   data() {
     this.store = createStore(this, {});
 
-    return {
-
-    };
+    return { };
   },
 
   methods: {
@@ -203,15 +201,19 @@ export default {
     },
 
     _getElFormItemData(widget, key) {
+      const props = {
+        label: widget.label,
+        prop: widget.prop
+      };
+      const rules = widget.rules;
+      if (rules.length > 0) {
+        props.rules = rules;
+      }
       const data = merge(
         {},
         widget['formItemData'],
         {
-          props: {
-            label: widget.label,
-            prop: widget.prop,
-            required: widget.required
-          },
+          props,
           attrs: {
             prop: widget.prop
           },
@@ -240,18 +242,25 @@ export default {
       const userLabelVNode = labelSoltFn && labelSoltFn.call(this, h, widget);
       const defaultVNode = defaultlSoltFn && defaultlSoltFn.call(this, h, widget);
 
+      const props = {
+        type: widget.type,
+        readonly: (typeof widget.readonly !== 'undefined') ? widget.readonly : readonly,
+        renderReadonly: widget.renderReadonly,
+        renderWidget: widget.renderWidget,
+        placeholder: widget.placeholder,
+        disabled: widget.disabled,
+        [typeData]: widget[typeData],
+        ajaxOptions: widget.ajaxOptions
+      };
+
+      const bind = widget['v-bind']; // 扩展自定义组件的props属性
+      Object.keys(bind).forEach(key => {
+        props[key] = bind[key];
+      });
+
       return [ // 根据type自动生成控件
         h(widget.widgetComponent, {
-          props: {
-            type: widget.type,
-            readonly: (typeof widget.readonly !== 'undefined') ? widget.readonly : readonly,
-            renderReadonly: widget.renderReadonly,
-            renderWidget: widget.renderWidget,
-            placeholder: widget.placeholder,
-            disabled: widget.disabled,
-            [typeData]: widget[typeData],
-            ajaxOptions: widget.ajaxOptions
-          },
+          props,
           attrs: {
             prop: widget.prop
           },
@@ -262,7 +271,8 @@ export default {
               model[widget['prop']] = $$v;
             }
           },
-          ref: 'widget-' + widget['prop']
+          ref: 'widget-' + widget['prop'],
+          key: 'widget-' + widget['prop']
         }),
         [
           isVNode(userLabelVNode)
@@ -423,6 +433,7 @@ export default {
   watch: {
     data: {
       immediate: true,
+      deep: true,
       handler(value) {
         this.store.commit('setData', value);
       }
