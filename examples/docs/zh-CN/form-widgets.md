@@ -1,6 +1,6 @@
 ## FormWidgets 表单
 
-由输入框、选择器、单选框、多选框等控件组成，用以收集、校验、提交数据。与`Form`组件的区别是`FormWidgets`组件的使用配置化。
+由输入框、选择器、单选框、多选框等控件组成，用以收集、校验、提交数据。与`Form`组件的区别是`FormWidgets`组件的使用是配置化。
 
 ### 典型表单
 
@@ -390,6 +390,144 @@
   :model="model"
   layout="grid"
   readonly
+  :show-action-buttons="false"
+/>
+<script>
+  export default {
+    data() {
+      return {
+        model: {
+          name: "徐志伟",
+          region: "区域1",
+          date: "2021-07-23",
+          delivery: false,
+          type: ["地推活动"],
+          resource: "线下场地免费",
+          desc: "啥活动形式都可以",
+        },
+        data: [
+          {
+            type: "input",
+            span: 12,
+            placeholder: "请输入活动名称",
+            prop: "name",
+            label: "活动名称",
+          },
+          {
+            type: "select",
+            span: 12,
+            placeholder: "请选择活动区域",
+            prop: "region",
+            label: "活动区域",
+            ajaxOptions: {
+              localList: [
+                {
+                  value: "区域1",
+                  label: "区域1",
+                },
+                {
+                  value: "区域2",
+                  label: "区域2",
+                },
+              ],
+            },
+          },
+          {
+            type: "date-picker",
+            span: 12,
+            placeholder: "选择日期",
+            prop: "date",
+            label: "活动时间",
+          },
+          {
+            type: "switch",
+            span: 12,
+            placeholder: "",
+            prop: "delivery",
+            label: "即时配送",
+          },
+          {
+            type: "checkbox",
+            span: 12,
+            placeholder: "请输入活动名称",
+            prop: "type",
+            label: "活动",
+            ajaxOptions: {
+              localList: [
+                {
+                  label: "美食/餐厅线上活动",
+                  value: "美食/餐厅线上活动",
+                },
+                {
+                  label: "地推活动",
+                  value: "地推活动",
+                },
+                {
+                  label: "线下主题活动",
+                  value: "线下主题活动",
+                },
+                {
+                  label: "单纯品牌曝光",
+                  value: "单纯品牌曝光",
+                },
+              ],
+            },
+          },
+          {
+            type: "radio",
+            span: 12,
+            prop: "resource",
+            label: "特殊资源",
+            ajaxOptions: {
+              localList: [
+                {
+                  label: "线上品牌商赞助",
+                  value: "线上品牌商赞助",
+                },
+                {
+                  label: "线下场地免费",
+                  value: "线下场地免费",
+                },
+              ],
+            },
+          },
+          {
+            type: "input",
+            span: 24,
+            placeholder: "活动形式",
+            prop: "desc",
+            label: "活动形式",
+            inputData: {
+              props: {
+                type: "textarea",
+              },
+              attrs: {
+                rows: 5,
+              },
+            },
+          },
+        ],
+      };
+    },
+  };
+</script>
+```
+
+:::
+
+### 禁用表单
+
+禁用表单会禁用所有控件,不能操作。建议使用只读表单来展示，更加轻量级。
+
+:::demo 使用`disabled`就能禁用整个表单。
+
+```html
+<el-form-widgets
+  ref="comp"
+  :data="data"
+  :model="model"
+  layout="grid"
+  disabled
   :show-action-buttons="false"
 />
 <script>
@@ -1097,20 +1235,76 @@
 
 :::
 
-### 自定义 label 和追加新的内容
+### 自定义 label 和 自定义追加内容
 
-使用 label slot render 函数 来自定义 label。使用 default slot render 函数 来追加新的内容。
+使用 `label` 函数 来自定义 label。使用 `prepend` 函数 来向前追加新的内容。使用 `append` 函数 来向后追加新的内容。
 
-:::demo 在`data`成员中通过配置`formItemData.slots.label`函数，即可使用自定义 label。在`data`成员中通过配置`formItemData.slots.default`函数，可以追加新的内容
+:::demo 在`data`成员`formItemData.slots`中,分别配置 `label` `prepend` `append`即可。
 
 ```html
 <el-form-widgets :data="data" :model="model" layout="grid" />
 <script>
   export default {
     data() {
+      const prepend = function(h, text) {
+        return h(
+          "span",
+          {
+            slot: "prepend",
+            style: {
+              fontSize: "12px",
+              color: "red",
+              margin: "6px 0 0 0",
+            },
+          },
+          text
+        );
+      };
+
+      const append = function(h, html) {
+        return h("div", {
+          slot: "append",
+          domProps: {
+            innerHTML: html,
+          },
+        });
+      };
+
+      const label = function(h, widget) {
+        return h(
+          "div",
+          {
+            slot: "label",
+            class: "form-widgets-custom-label__wrap",
+          },
+          [
+            h(
+              "p",
+              {
+                class: "form-widgets-custom-label__text",
+                attrs: {
+                  title: widget.label,
+                },
+              },
+              widget.label
+            ),
+            h("div", {
+              style: {
+                marginTop: "-12px",
+              },
+              domProps: {
+                innerHTML: `<div style="font-size: 12px; color: #ccc;">自定义富文本...</div>`,
+              },
+            }),
+          ]
+        );
+      };
+
       return {
         model: {
           name: "徐志伟",
+          hobby: "",
+          sex: false,
         },
         data: [
           {
@@ -1126,39 +1320,50 @@
             },
             formItemData: {
               slots: {
-                label: function(h, widget) {
-                  return h(
-                    "div",
-                    {
-                      slot: "label",
-                      class: "form-widgets-custom-label__wrap",
-                    },
-                    [
-                      h(
-                        "p",
-                        {
-                          class: "form-widgets-custom-label__text",
-                          attrs: {
-                            title: widget.label,
-                          },
-                        },
-                        widget.label
-                      ),
-                    ]
-                  );
-                },
-                default: function(h, widget) {
-                  return h(
-                    "p",
-                    {
-                      style: {
-                        fontSize: "12px",
-                        color: "red",
-                        margin: "6px 0 0 0",
-                      },
-                    },
+                label,
+                prepend: function(h, widget) {
+                  return prepend(
+                    h,
                     "我是一个特殊的说明，其实也没啥说的，就想说一下。"
                   );
+                },
+                append: function(h, widget) {
+                  return append(h, `<i>我也可以在下面显示一些说明</i>`);
+                },
+              },
+            },
+          },
+          {
+            type: "input",
+            span: 24,
+            placeholder: "请输入",
+            prop: "hobby",
+            label: "兴趣爱好",
+            inputData: {
+              style: {
+                marginTop: "4px",
+              },
+              props: {
+                type: "textarea",
+              },
+            },
+            formItemData: {
+              slots: {
+                append: function(h, widget) {
+                  return append(h, `<i>我是来自富文本编辑器中的文本</i>`);
+                },
+              },
+            },
+          },
+          {
+            type: "switch",
+            placeholder: "",
+            prop: "sex",
+            label: "性别",
+            formItemData: {
+              slots: {
+                prepend: function(h, widget) {
+                  return prepend(h, "我可以在上面显示一些说明");
                 },
               },
             },

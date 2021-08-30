@@ -230,17 +230,12 @@ export default {
       const typeData = getPropByType(widget['type']);
       const { model, showLabelTitle, readonly } = this;
 
-      const labelVNode = h('span', {
-        slot: 'label',
-        attrs: {
-          title: widget.label
-        }
-      }, widget.label);
-
+      const prependSoltFn = ((widget.formItemData || {}).slots || {}).prepend;
       const labelSoltFn = ((widget.formItemData || {}).slots || {}).label;
-      const defaultlSoltFn = ((widget.formItemData || {}).slots || {}).default;
+      const appendSoltFn = ((widget.formItemData || {}).slots || {}).append;
+      const prependVNode = prependSoltFn && prependSoltFn.call(this, h, widget);
       const userLabelVNode = labelSoltFn && labelSoltFn.call(this, h, widget);
-      const defaultVNode = defaultlSoltFn && defaultlSoltFn.call(this, h, widget);
+      const appendVNode = appendSoltFn && appendSoltFn.call(this, h, widget);
 
       const props = {
         type: widget.type,
@@ -258,8 +253,11 @@ export default {
         props[key] = bind[key];
       });
 
-      return [ // 根据type自动生成控件
-        h(widget.widgetComponent, {
+      const defaultVNode = h('div', {
+        slot: 'default'
+      }, [
+        prependVNode,
+        h(widget.widgetComponent, { // 根据type自动生成控件
           props,
           attrs: {
             prop: widget.prop
@@ -274,15 +272,25 @@ export default {
           ref: 'widget-' + widget['prop'],
           key: 'widget-' + widget['prop']
         }),
-        [
-          isVNode(userLabelVNode)
-            ? userLabelVNode
-            : showLabelTitle
-              ? labelVNode
-              : '',
-          defaultVNode
-        ]
+        appendVNode
+      ]);
 
+      const innerLabelVNode = h('span', {
+        slot: 'label',
+        attrs: {
+          title: widget.label
+        }
+      }, widget.label);
+
+      const labelVNode = isVNode(userLabelVNode)
+        ? userLabelVNode
+        : showLabelTitle
+          ? innerLabelVNode
+          : '';
+
+      return [
+        defaultVNode,
+        labelVNode
       ];
     },
 
