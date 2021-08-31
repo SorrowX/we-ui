@@ -1407,34 +1407,35 @@
 
 #### props 属性可以转换下面的 key
 
-| 参数           | 说明                                                        | 类型     | 可选值 | 默认值 |
-| -------------- | ----------------------------------------------------------- | -------- | ------ | ------ |
-| type           | 控件类型(具体查看各个控件文档)                              | string   | 必填   | —      |
-| prop           | 控件双向绑定的变量                                          | string   | 必填   | —      |
-| label          | label 文本                                                  | string   | —      | —      |
-| span           | 栅格系统行占比(1-24)                                        | number   | —      | 24     |
-| required       | 是否必填                                                    | boolean  | —      | —      |
-| disabled       | 控件是否禁用                                                | boolean  | —      | false  |
-| placeholder    | 控件占位符                                                  | string   | —      | —      |
-| readonly       | 控件只读(渲染文本)                                          | boolean  | —      | false  |
-| hidden         | 控件隐藏                                                    | boolean  | —      | false  |
-| rules          | 控件校验规则，优先使用该配置，忽略 FormWidgets 配置的 rules | array    | —      | —      |
-| ajaxOptions    | 接口请求(具体参考各个控件的文档)                            | object   | —      | —      |
-| renderWidget   | 自定义控件渲染                                              | function | —      | —      |
-| renderReadonly | 自定义只读控件渲染                                          | function | —      | —      |
-| formItemData   | form-item 组件的配置                                        | object   | —      | —      |
-| type + Data    | 控件组件的配置                                              | object   | —      | —      |
+| 参数           | 说明                                          | 类型     | 可选值 | 默认值 |
+| -------------- | --------------------------------------------- | -------- | ------ | ------ |
+| type           | 控件类型(具体查看各个控件文档)                | string   | 必填   | —      |
+| prop           | 控件双向绑定的变量                            | string   | 必填   | —      |
+| label          | label 文本                                    | string   | —      | —      |
+| span           | 栅格系统行占比(1-24)                          | number   | —      | 24     |
+| required       | 是否必填                                      | boolean  | —      | —      |
+| disabled       | 控件是否禁用                                  | boolean  | —      | false  |
+| placeholder    | 控件占位符                                    | string   | —      | —      |
+| readonly       | 控件只读(渲染文本)                            | boolean  | —      | false  |
+| hidden         | 控件隐藏                                      | boolean  | —      | false  |
+| rules          | 控件校验规则，会合并 FormWidgets 配置的 rules | array    | —      | —      |
+| ajaxOptions    | 接口请求(具体参考各个控件的文档)              | object   | —      | —      |
+| renderWidget   | 自定义控件渲染                                | function | —      | —      |
+| renderReadonly | 自定义只读控件渲染                            | function | —      | —      |
+| formItemData   | form-item 组件的配置                          | object   | —      | —      |
+| type + Data    | 控件组件的配置                                | object   | —      | —      |
 
 ### FormWidgets Methods
 
-| 方法名        | 说明                                                                                                                                                                 | 参数                                                                       |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| validate      | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise | Function(callback: Function(boolean, object))                              |
-| resetFields   | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果                                                                                                           | —                                                                          |
-| validateField | 对部分表单字段进行校验的方法                                                                                                                                         | Function(props: array \| string, callback: Function(errorMessage: string)) |
-| clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果                                                             | Function(props: array \| string)                                           |
-| getValue      | 获取到 model 的值                                                                                                                                                    | —                                                                          |
-| setValue      | 更新 model 的值                                                                                                                                                      | model                                                                      |
+| 方法名          | 说明                                                                                                                                                                 | 参数                                                                       |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| validate        | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise | Function(callback: Function(boolean, object))                              |
+| resetFields     | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果                                                                                                           | —                                                                          |
+| validateField   | 对部分表单字段进行校验的方法                                                                                                                                         | Function(props: array \| string, callback: Function(errorMessage: string)) |
+| clearValidate   | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果                                                             | Function(props: array \| string)                                           |
+| getValue        | 获取到 model 的值                                                                                                                                                    | —                                                                          |
+| setValue        | 更新 model 的值                                                                                                                                                      | model                                                                      |
+| emitChangeEvent | 自定义插件组件可以根据需求调用该方法,这样就能让 FormWidgets 组件触发 change 事件.配合自定义组件 form 属性就能拿到 FormWidgets 组件实例调用该方法                     | 需传参{ value: '', widgetInstance: null }                                  |
 
 ### 控件 公共方法
 

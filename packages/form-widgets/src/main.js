@@ -205,10 +205,11 @@ export default {
         label: widget.label,
         prop: widget.prop
       };
-      const rules = widget.rules;
-      if (rules.length > 0) {
-        props.rules = rules;
-      }
+
+      const parentRules = (this.rules || {})[widget.prop] || [];
+      const selfRules = widget.rules || [];
+      props.rules = [].concat(selfRules, parentRules);
+
       const data = merge(
         {},
         widget['formItemData'],
@@ -252,6 +253,7 @@ export default {
       Object.keys(bind).forEach(key => {
         props[key] = bind[key];
       });
+      props['form'] = this.formInstance;
 
       const defaultVNode = h('div', {
         slot: 'default'
@@ -424,6 +426,17 @@ export default {
           })
         )
       ]);
+    },
+
+    emitChangeEvent(...args) { // { value: '', widgetInstance: null }
+      const arg0 = args[0];
+      const widgetInstance = arg0['widgetInstance'];
+      const prop = widgetInstance.$attrs.prop;
+      arg0['formInstance'] = this.formInstance;
+      arg0['formItemInstance'] = this.$refs['form-item-' + prop];
+      arg0['prop'] = prop;
+      arg0['model'] = deepCopy(this.model);
+      this.$emit.apply(this, ['change'].concat(args));
     }
   },
 
@@ -455,16 +468,7 @@ export default {
   },
 
   created() {
-    this.$on(CHANGE_EVENT_NAME, (...args) => {
-      const arg0 = args[0];
-      const widgetInstance = arg0['widgetInstance'];
-      const prop = widgetInstance.$attrs.prop;
-      arg0['formInstance'] = this.formInstance;
-      arg0['formItemInstance'] = this.$refs['form-item-' + prop];
-      arg0['prop'] = prop;
-      arg0['model'] = deepCopy(this.model);
-      this.$emit.apply(this, ['change'].concat(args));
-    });
+    this.$on(CHANGE_EVENT_NAME, this.emitChangeEvent);
   },
 
   mounted() {

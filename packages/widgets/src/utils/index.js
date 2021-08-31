@@ -115,11 +115,7 @@ export const bindContext = (f, context) => {
 };
 
 export const getRules = (rules = [], required, message) => {
-  const requiredRule =
-    required !== undefined
-      ? { required: !!required, message }
-      : [];
-  return [].concat(rules).concat(requiredRule);
+  return [].concat(rules).concat(required === true ? { required, message } : []);
 };
 
 export const renderReadonly = (h, value, props) => {
