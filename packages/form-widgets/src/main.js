@@ -147,33 +147,33 @@ export default {
           callback = (valid, invalidFields) => {
             return valid ? resolve(true) : reject(invalidFields);
           };
-          this.formInstance.validate((valid, invalidFields) => {
+          this.getFormInstance().validate((valid, invalidFields) => {
             callback(valid, invalidFields);
           });
         });
       } else {
-        this.formInstance.validate((valid, invalidFields) => {
+        this.getFormInstance().validate((valid, invalidFields) => {
           callback && callback(valid, invalidFields);
         });
       }
     },
 
     resetFields() {
-      return this.formInstance.resetFields();
+      return this.getFormInstance().resetFields();
     },
 
     validateField(props, cb) {
-      this.formInstance.validateField(props, cb);
+      this.getFormInstance().validateField(props, cb);
     },
 
     clearValidate(props = []) {
-      this.formInstance.clearValidate(props);
+      this.getFormInstance().clearValidate(props);
     },
 
     _setLabelBackgroundColor(backgroundColor) {
       this.$nextTick(() => {
         const { layout } = this;
-        const parent = (this.formInstance || {}).$el;
+        const parent = this.getFormInstance().$el;
         if (layout === 'grid' && parent) {
           const labels = parent.querySelectorAll('label[class*="el-form-item__label"]');
           labels.forEach(dom => {
@@ -253,7 +253,7 @@ export default {
       Object.keys(bind).forEach(key => {
         props[key] = bind[key];
       });
-      props['form'] = this.formInstance;
+      props['form'] = this.getFormInstance();
 
       const defaultVNode = h('div', {
         slot: 'default'
@@ -432,19 +432,19 @@ export default {
       const arg0 = args[0];
       const widgetInstance = arg0['widgetInstance'];
       const prop = widgetInstance.$attrs.prop;
-      arg0['formInstance'] = this.formInstance;
+      arg0['formInstance'] = this.getFormInstance();
       arg0['formItemInstance'] = this.$refs['form-item-' + prop];
       arg0['prop'] = prop;
       arg0['model'] = deepCopy(this.model);
       this.$emit.apply(this, ['change'].concat(args));
+    },
+
+    getFormInstance() {
+      return this.$refs.formInstance || {};
     }
   },
 
   computed: {
-    formInstance() {
-      return this.$refs.formInstance || {};
-    },
-
     ...mapStates({
       widgetsGroup: 'widgetsGroup',
       widgets: 'widgets'
