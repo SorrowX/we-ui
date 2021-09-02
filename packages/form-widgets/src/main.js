@@ -253,7 +253,7 @@ export default {
       Object.keys(bind).forEach(key => {
         props[key] = bind[key];
       });
-      props['form'] = this.getFormInstance();
+      props['form'] = this;
 
       const defaultVNode = h('div', {
         slot: 'default'
