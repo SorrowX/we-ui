@@ -391,6 +391,7 @@
     filterable
     clearable
     multiple
+    arrow-position-center
     style="width: 250px; margin-bottom: 10px;"
     placeholder="请选择"
     v-model="value2"
@@ -407,6 +408,7 @@
     filterable
     clearable
     multiple
+    arrow-position-center
     style="width: 250px; margin-bottom: 10px;"
     placeholder="请选择"
     v-model="value2"
@@ -443,16 +445,16 @@
       return {
         value: [
           {
-            label: "徐志伟",
-            value: "xzw",
+            label: '徐志伟',
+            value: 'xzw',
           },
           {
-            label: "徐志康",
-            value: "xzk",
+            label: '徐志康',
+            value: 'xzk',
           },
         ],
         value2: [],
-        msg: "",
+        msg: '',
       };
     },
     methods: {

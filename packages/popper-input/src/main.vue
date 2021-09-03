@@ -15,6 +15,7 @@
     :stopPopperMouseEvent="true"
     :gpuAcceleration="false"
     :manual-mode="disabled"
+    :popper-options="popperOptions"
     :fallback-placements="fallbackPlacements"
     @mouseenter.native="inputHover = true"
     @mouseleave.native="inputHover = false"
@@ -92,6 +93,22 @@ const InputSizeMap = {
   mini: 28
 };
 
+const popperOptions = {
+  modifiers: [
+    {
+      name: 'arrowPosition',
+      enabled: true,
+      phase: 'main',
+      fn: ({ state }) => {
+        const { modifiersData, placement } = state;
+        if (['right', 'left'].includes(placement)) return;
+        modifiersData.arrow.x = 35;
+      },
+      requires: ['arrow']
+    }
+  ]
+};
+
 export default {
   name: 'ElPopperInput',
 
@@ -136,7 +153,7 @@ export default {
     },
     fallbackPlacements: {
       type: Array,
-      default: () => ['top']
+      default: () => ['bottom-start', 'top-start', 'right', 'left']
     },
     arrowPositionCenter: {
       type: Boolean,
@@ -216,6 +233,10 @@ export default {
       } else {
         return [];
       }
+    },
+
+    popperOptions() {
+      return this.arrowPositionCenter ? {} : popperOptions;
     }
   },
 
@@ -230,9 +251,6 @@ export default {
     },
 
     visible(val) {
-      if (val) {
-        this.updateArrowPosition();
-      }
       this.$emit('visible-change', val);
     }
   },
@@ -244,27 +262,6 @@ export default {
 
     show() {
       this.visible = true;
-    },
-
-    updateArrowPosition() {
-      if (this.arrowPositionCenter) return;
-      const update = () => {
-        const popperRef = (this.$refs || {}).popperRef || {};
-        const popperRefEl = popperRef.$el;
-        if (!popperRef) return;
-
-        const arrow = popperRef.$refs.arrowRef;
-        const arrowLeft = parseFloat(arrow.style.left, 10);
-        const defaultLeft = 35;
-
-        const offsetWidth = popperRefEl.offsetWidth;
-        const diff = offsetWidth / 2 - defaultLeft - 8;
-        const left = Math.max(arrowLeft - diff, defaultLeft);
-
-        arrow.style.left = left + 'px';
-      };
-      clearTimeout(this.tick);
-      this.tick = setTimeout(update, 0);
     },
 
     handleClear() {
@@ -336,12 +333,6 @@ export default {
     if (inputRef && inputRef.$el) {
       this.inputInitialHeight = inputRef.$el.offsetHeight || InputSizeMap[this.realSize] || 40;
     }
-
-    addEventListener('resize', this.updateArrowPosition);
-  },
-
-  beforeDestroy() {
-    removeEventListener('resize', this.updateArrowPosition);
   }
 };
 </script>
