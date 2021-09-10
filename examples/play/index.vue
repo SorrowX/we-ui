@@ -1,41 +1,41 @@
 <template>
-  <el-popper-input
-    style="width: 250px"
-    placeholder="请选择"
-    v-model="value"
-    ref="popper"
+  <fixed-size-list 
+    ref="comp"
+    class-name="vr-list"
+    :width="200"
+    :height="200"
+    :item-size="25"
+    :total="100"
+    :cache="3"
+    direction="ltr"
+    layout="horizontal"
   >
-    <el-scrollbar-v2 height="280px" ref="scrollbar">
-      <ul class="el-popper-input__list">
-        <li
-          v-for="num in 20"
-          :key="num"
-          class="el-popper-input__item"
-          @click="handleClick(num)"
-        >
-          {{ num }}
-        </li>
-      </ul>
-    </el-scrollbar-v2>
-  </el-popper-input>
+    <template slot="default" slot-scope="slotProps">
+      <div :style="slotProps.style">{{ slotProps.index }}</div>
+    </template>
+    <p>siushdius</p>
+  </fixed-size-list>
 </template>
 
 <script>
+  import { FixedSizeList } from 'packages/virtual-list/index'
   export default {
+    components: {
+      FixedSizeList,
+    },
     data() {
       return {
         value: {},
       };
     },
-    methods: {
-      handleClick(num) {
-        this.value = {
-          label: num,
-          value: num,
-        };
-        this.$refs.popper.hide();
-        this.$refs.scrollbar.setScrollTop(0);
-      },
+    mounted() {
+      window.xxx = this.$refs.comp
     },
   };
 </script>
+
+<style>
+.vr-list {
+  border: 1px solid green;
+}
+</style>
