@@ -364,6 +364,10 @@
             {
               "path": "/popper-input",
               "title": "PopperInput"
+            },
+            {
+              "path": "/affix",
+              "title": "Affix"
             }
           ]
         }
@@ -735,6 +739,10 @@
             {
               "path": "/popper-input",
               "title": "PopperInput"
+            },
+            {
+              "path": "/affix",
+              "title": "Affix"
             }
           ]
         }
@@ -1106,6 +1114,10 @@
             {
               "path": "/popper-input",
               "title": "PopperInput"
+            },
+            {
+              "path": "/affix",
+              "title": "Affix"
             }
           ]
         }
@@ -1477,6 +1489,10 @@
             {
               "path": "/popper-input",
               "title": "PopperInput"
+            },
+            {
+              "path": "/affix",
+              "title": "Affix"
             }
           ]
         }

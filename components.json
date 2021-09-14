@@ -99,5 +99,6 @@
   "table-widgets": "./packages/table-widgets/index.js",
   "scrollbar-v2": "./packages/scrollbar-v2/index.js",
   "popper-v2": "./packages/popper-v2/index.js",
-  "popper-input": "./packages/popper-input/index.js"
+  "popper-input": "./packages/popper-input/index.js",
+  "affix": "./packages/affix/index.js"
 }

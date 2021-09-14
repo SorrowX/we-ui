@@ -101,6 +101,7 @@ import TableWidgets from '../packages/table-widgets/index.js';
 import ScrollbarV2 from '../packages/scrollbar-v2/index.js';
 import PopperV2 from '../packages/popper-v2/index.js';
 import PopperInput from '../packages/popper-input/index.js';
+import Affix from '../packages/affix/index.js';
 import locale from 'element-ui/src/locale';
 import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 import ImageViewer from 'element-ui/packages/image/src/image-viewer';
@@ -203,6 +204,7 @@ const components = [
   ScrollbarV2,
   PopperV2,
   PopperInput,
+  Affix,
   CollapseTransition,
   ImageViewer
 ];
@@ -346,5 +348,6 @@ export default {
   TableWidgets,
   ScrollbarV2,
   PopperV2,
-  PopperInput
+  PopperInput,
+  Affix
 };

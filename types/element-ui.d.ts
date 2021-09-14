@@ -99,6 +99,7 @@ import { ElFormWidgets } from './form-widgets'
 import { ElTableWidgets } from './table-widgets'
 import { ElScrollbarV2 } from './scrollbar-v2'
 import { ElPopperInput } from './popper-input'
+import { ElAffix } from './affix'
 
 export interface InstallationOptions {
   locale: any,
@@ -420,3 +421,6 @@ export class ScrollbarV2 extends ElScrollbarV2 {}
 
 /** PopperInput Component */
 export class PopperInput extends ElPopperInput {}
+
+/** Affix Component */
+export class Affix extends ElAffix {}
