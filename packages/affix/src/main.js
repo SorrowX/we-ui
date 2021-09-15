@@ -136,7 +136,7 @@ export default {
     } else {
       this.targetEle = document.documentElement;
     }
-    this.scrollContainerEle = getScrollContainer(this.$refs.root);
+    this.scrollContainerEle = getScrollContainer(this.$refs.root, true);
 
     on(this.scrollContainerEle, 'scroll', this.onScroll);
     addResizeListener(this.$refs.root, this.update);

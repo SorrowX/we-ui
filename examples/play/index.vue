@@ -48,4 +48,9 @@
 .vr-list {
   border: 1px solid green;
 }
+
+.affix-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
 </style>
